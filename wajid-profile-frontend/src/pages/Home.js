@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+ // Experience.js
+import { experienceData } from '../data/experinceData';
 
 function Home() {
   return (
@@ -9,6 +11,12 @@ function Home() {
         alt="Wajid Jamadar"
         className="profile-pic"
       />
+{/* CONTACT LINKS */}
+      <div className="contact">
+        <a href="mailto:wajidjamadar01@gmail.com" target="_blank" rel="noreferrer">📧 Email</a> |{' '}
+        <a href="https://github.com/Jamadar01" target="_blank" rel="noreferrer">💻 GitHub</a> |{' '}
+        <a href="https://www.linkedin.com/in/wajid-jamadar-2b880b20a/" target="_blank" rel="noreferrer">🔗 LinkedIn</a>
+      </div>
 
       {/* ABOUT ME */}
       <h2>About Me</h2>
@@ -26,20 +34,33 @@ function Home() {
         learn, and grow in the tech world.
       </p>
 
-      {/* CONTACT LINKS */}
-      <div className="contact">
-        <a href="mailto:wajidjamadar01@gmail.com" target="_blank" rel="noreferrer">📧 Email</a> |{' '}
-        <a href="https://github.com/Jamadar01" target="_blank" rel="noreferrer">💻 GitHub</a> |{' '}
-        <a href="https://www.linkedin.com/in/wajid-jamadar-2b880b20a/" target="_blank" rel="noreferrer">🔗 LinkedIn</a>
-      </div>
-
+      
       {/* EDUCATION */}
       <div className="sub-section">
         <h2>Education</h2>
         <p><strong>Sardar Patel Institute of Technology</strong> (2020 – 2024)</p>
         <p>B.Tech in Electronics Engineering – 7.0 CGPA, Andheri, Mumbai</p>
       </div>
-
+<div className="sub-section">
+        <h2>Experience Preview</h2>
+        <div className="card-grid">
+          {experienceData.map((exp, index) => (
+            <div className="exp-card" key={index}>
+              <img
+                src={`${exp.image}`} // Make sure image names match
+                alt={exp.company}
+                className="exp-card-img"
+              />
+              <div className="exp-card-content">
+                <h3>{exp.role}</h3>
+                <p><strong>{exp.company}</strong></p>
+                <p><em>{exp.techStack.split(',').slice(0, 3).join(', ')}...</em></p>
+                <Link to="/experience" className="exp-card-link">See More</Link>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
       {/* SKILLS */}
       <div className="sub-section">
         <h2>Key Skills</h2>

@@ -289,3 +289,97 @@ body {
   background-color: var(--section-highlight);
 }
 
+.metrics-grid {
+  display: flex;
+  justify-content: space-around;
+  gap: 1.5rem;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.metric-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  width: 180px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.metric-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+}
+
+.metric-card h3 {
+  font-size: 2rem;
+  margin: 0;
+  color: var(--section-highlight);
+  font-weight: bold;
+}
+
+.metric-card p {
+  margin: 8px 0 0;
+  color: var(--text-color);
+  opacity: 0.8;
+  font-size: 0.95rem;
+}
+
+.resume-container {
+  text-align: center;
+  margin: 30px 0;
+}
+
+/* .resume-btn {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: var(--section-highlight);
+  color: var(--bg-color);
+  font-weight: 600;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.resume-btn:hover {
+  background-color: var(--hover-color);
+  color: whitesmoke;
+  border: #915eff solid;
+  transform: translateY(-2px);
+} */
+ .resume-btn {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: var(--section-highlight);
+  color: var(--bg-color);
+  font-weight: 600;
+  border-radius: 8px;
+  text-decoration: none;
+  border: 2px solid transparent;
+  transition: background-color 0.3s ease, transform 0.2s ease, border 0.3s ease;
+}
+
+.resume-btn:hover {
+  background-color: transparent;
+  color: var(--section-highlight);
+  border: 2px solid var(--section-highlight);
+  transform: translateY(-2px);
+}
+
+.typing-intro {
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin: 1rem 0 2rem;
+  color: var(--section-highlight);
+}
+
+.typing-intro span {
+  border-right: 2px solid var(--section-highlight); /* cursor effect */
+  padding-right: 4px;
+}
+
+
+

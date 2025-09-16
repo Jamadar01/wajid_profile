@@ -2,10 +2,32 @@ import React from 'react';
 import { Link } from 'react-router-dom';
  // Experience.js
 import { experienceData } from '../data/experinceData';
+import PerformanceMetrics from "../components/PerformanceMetrics";
+import ResumeButton from "../components/ResumeDownloadButton";
+import { ReactTyped } from "react-typed";
+import Recommendations from "../components/Recommendations";
+
 
 function Home() {
   return (
+    
     <div className="section">
+      {/* TYPING INTRO */}
+      <div className="typing-intro">
+        <ReactTyped
+          strings={[
+            "Hi, I’m Wajid 👋",
+            "Full-Stack Developer 💻",
+            "AI Enthusiast 🤖",
+            "Open Source Contributor 🌍"
+          ]}
+          typeSpeed={50}
+          backSpeed={30}
+          loop
+        />
+      </div>
+
+
       <img
         src="/images/profile.JPG"
         alt="Wajid Jamadar"
@@ -20,6 +42,7 @@ function Home() {
 
       {/* ABOUT ME */}
       <h2>About Me</h2>
+      <ResumeButton />
       <p>
         I’m a passionate Software Developer currently working at Wohlig Transformation. I specialize in building intelligent,
         real-time web applications using technologies like Node.js, React.js, OpenAI, Google Cloud, and WebSockets.
@@ -34,7 +57,8 @@ function Home() {
         learn, and grow in the tech world.
       </p>
 
-      
+      {/* PERFORMANCE METRICS */}
+      <PerformanceMetrics />
       {/* EDUCATION */}
       <div className="sub-section">
         <h2>Education</h2>
@@ -100,8 +124,10 @@ function Home() {
         <p>Explore other sections:</p>
         <Link to="/experience">Experience</Link> |{' '}
         <Link to="/skills">Skills</Link> |{' '}
+        
         <Link to="/hackathons">Hackathons</Link>
       </div>
+      <Recommendations />
     </div>
   );
 }

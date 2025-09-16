@@ -8,6 +8,7 @@ import { ReactTyped } from "react-typed";
 import Recommendations from "../components/Recommendations";
 
 
+
 function Home() {
   return (
     

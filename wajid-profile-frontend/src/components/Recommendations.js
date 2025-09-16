@@ -62,6 +62,7 @@
 import React from "react";
 import "../css/Recommendations.css"; // simple CSS file
 
+
 const recommendations = [
   {
     quote: "Wajid is a highly resourceful developer who always finds elegant solutions.",

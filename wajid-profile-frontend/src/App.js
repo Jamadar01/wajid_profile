@@ -53,7 +53,7 @@ function Portfolio() {
         <Projects />
         <SkillMap />
         <Hackathons />
-        <section className="space-section" id="testimonials">
+        {/* <section className="space-section" id="testimonials">
           <p className="section-label">What People Say</p>
           <h2 className="section-heading">Signal Transmissions</h2>
           <div className="section-divider" />
@@ -61,7 +61,7 @@ function Portfolio() {
             Messages received from collaborators across the galaxy — real endorsements, decoded and displayed.
           </p>
           <Recommendations />
-        </section>
+        </section> */}
         <footer className="space-footer">
           Built with ♥ by <a href="https://github.com/Jamadar01" target="_blank" rel="noreferrer">Wajid Jamadar</a> · 2025
         </footer>

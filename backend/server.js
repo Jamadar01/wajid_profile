@@ -14,11 +14,12 @@ const recommendationRoutes = require('./src/routes/recommendations');
 
 const app = express();
 
-const allowedOrigins = (process.env.FRONTEND_URL || '*').split(',').map(s => s.trim());
 app.use(cors({
-  origin: allowedOrigins.includes('*') ? '*' : allowedOrigins,
-  credentials: true,
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
 }));
+app.options('*', cors());
 app.use(express.json());
 
 app.use('/api/auth',            authRoutes);

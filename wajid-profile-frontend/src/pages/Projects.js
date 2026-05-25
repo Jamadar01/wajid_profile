@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { projectsData } from '../data/projectsData';
 
-function Planet({ project, selected, onClick }) {
+function Planet({ project, selected, onClick, index }) {
   const { name, color, glow, highlight, ring, size } = project;
 
   return (
@@ -10,11 +10,10 @@ function Planet({ project, selected, onClick }) {
       onClick={() => onClick(project)}
       title={name}
     >
-      <div className="planet-scene">
-        {/* Atmosphere halo */}
-        <div className="planet-halo" style={{ boxShadow: `0 0 40px 10px ${glow}` }} />
+      <p className="planet-number">PROJECT {String(index + 1).padStart(2, '0')}</p>
 
-        {/* Planet sphere */}
+      <div className="planet-scene">
+        <div className="planet-halo" style={{ boxShadow: `0 0 40px 10px ${glow}` }} />
         <div
           className="planet-sphere"
           style={{
@@ -37,6 +36,8 @@ function Planet({ project, selected, onClick }) {
       </div>
 
       <p className="planet-name">{name}</p>
+      <p className="planet-company-tag">{project.company}</p>
+
       <div className="planet-chips">
         {project.tech.slice(0, 2).map(t => (
           <span key={t} className="planet-chip" style={{ borderColor: `${color}44`, color }}>
@@ -44,6 +45,8 @@ function Planet({ project, selected, onClick }) {
           </span>
         ))}
       </div>
+
+      <p className="planet-hint">↗ Click to explore</p>
     </div>
   );
 }
@@ -56,25 +59,24 @@ export default function Projects() {
   return (
     <section id="projects" className="space-section">
       <p className="section-label">Projects</p>
-      <h2 className="section-heading">My Planets</h2>
+      <h2 className="section-heading">My Planet System</h2>
       <div className="section-divider" />
       <p className="about-text" style={{ marginBottom: '2rem', maxWidth: 580 }}>
-        Each planet is a project I've built. Click one to explore its orbit.
+        Each planet represents a real project I built. Click any planet to reveal its full story — tech stack, description, and company.
       </p>
 
-      {/* Planet grid */}
       <div className="planet-grid">
-        {projectsData.map(p => (
+        {projectsData.map((p, i) => (
           <Planet
             key={p.id}
             project={p}
+            index={i}
             selected={selected?.id === p.id}
             onClick={handleSelect}
           />
         ))}
       </div>
 
-      {/* Detail panel — slides in when a planet is selected */}
       {selected && (
         <div
           className="planet-detail"

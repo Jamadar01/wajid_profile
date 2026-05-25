@@ -47,9 +47,12 @@ export default function App() {
         <SkillMap />
         <Hackathons />
         <section className="space-section" id="testimonials">
-          <p className="section-label">Testimonials</p>
-          <h2 className="section-heading">What People Say</h2>
+          <p className="section-label">What People Say</p>
+          <h2 className="section-heading">Signal Transmissions</h2>
           <div className="section-divider" />
+          <p className="about-text" style={{ marginBottom: '2rem', maxWidth: 520 }}>
+            Messages received from collaborators across the galaxy — real endorsements, decoded and displayed.
+          </p>
           <Recommendations />
         </section>
         <footer className="space-footer">

@@ -1,15 +1,33 @@
 import React from 'react';
 import PerformanceMetrics from '../components/PerformanceMetrics';
 
+const STATUS_CHIPS = [
+  { label: 'STATUS', value: 'ACTIVE',        color: '#34D399' },
+  { label: 'BASE',   value: 'Mumbai, IN',    color: '#38BDF8' },
+  { label: 'ROLE',   value: 'Software Dev',  color: '#A78BFA' },
+  { label: 'FOCUS',  value: 'AI + Full-Stack', color: '#F472B6' },
+];
+
 export default function About() {
   return (
     <section id="about" className="space-section">
       <p className="section-label">Who I Am</p>
-      <h2 className="section-heading">About Me</h2>
+      <h2 className="section-heading">Crew Profile</h2>
       <div className="section-divider" />
 
+      <div className="about-status-bar">
+        {STATUS_CHIPS.map(c => (
+          <div key={c.label} className="status-chip" style={{ borderColor: `${c.color}40` }}>
+            <span className="status-chip-label">{c.label}</span>
+            <span className="status-chip-value" style={{ color: c.color }}>{c.value}</span>
+          </div>
+        ))}
+      </div>
+
       <div className="about-grid">
-        <div className="glass-card">
+        <div className="glass-card" style={{ position: 'relative', overflow: 'hidden' }}>
+          <p className="card-micro-label">CREW BIO</p>
+          <div className="about-scan" />
           <p className="about-text">
             I'm a Software Developer at <strong style={{ color: '#a78bfa' }}>Wohlig Transformation</strong>,
             building intelligent real-time web applications powered by AI and Cloud.
@@ -32,6 +50,7 @@ export default function About() {
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           <div className="glass-card">
+            <p className="card-micro-label">BASE CAMP</p>
             <p className="edu-label">Education</p>
             <p className="edu-school">Sardar Patel Institute of Technology</p>
             <p className="edu-detail">B.Tech Electronics Engineering · 2020–2024</p>
@@ -39,6 +58,7 @@ export default function About() {
           </div>
 
           <div className="glass-card">
+            <p className="card-micro-label">CREW ACTIVITIES</p>
             <p className="edu-label">Extra-Curricular</p>
             <p className="about-text" style={{ marginBottom: '0.5rem' }}>
               <strong style={{ color: '#a78bfa' }}>Creative Head</strong> — Enactus SPIT: led design and video editing for events.

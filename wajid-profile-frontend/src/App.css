@@ -383,6 +383,61 @@ body {
   background: var(--glass);
 }
 
+/* ─── ABOUT — CREW PROFILE ─────────────────────────────── */
+.about-status-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.8rem;
+}
+
+.status-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 5px 14px;
+  border-radius: 20px;
+  border: 1px solid;
+  background: rgba(255,255,255,0.03);
+}
+.status-chip-label {
+  font-size: 0.6rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  font-weight: 600;
+}
+.status-chip-value {
+  font-size: 0.78rem;
+  font-weight: 600;
+  font-family: var(--heading);
+}
+
+.card-micro-label {
+  font-size: 0.58rem;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--purple);
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  opacity: 0.75;
+}
+
+@keyframes scanDown {
+  0%   { top: 0%;   opacity: 0.6; }
+  85%  { opacity: 0.15; }
+  100% { top: 100%; opacity: 0; }
+}
+.about-scan {
+  position: absolute;
+  left: 0; right: 0;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(139,92,246,0.8), transparent);
+  animation: scanDown 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
 /* ─── ABOUT ───────────────────────────────────────────── */
 .about-grid {
   display: grid;
@@ -620,7 +675,114 @@ body {
 .hack-badge.blue { background: rgba(59,130,246,0.12); border: 1px solid rgba(59,130,246,0.3); color: var(--blue); }
 .hack-badge.purple { background: rgba(139,92,246,0.12); border: 1px solid rgba(139,92,246,0.3); color: var(--purple); }
 
-/* ─── TESTIMONIALS ────────────────────────────────────── */
+/* ─── SIGNAL TRANSMISSIONS ───────────────────────────── */
+.tx-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.2rem;
+}
+
+.tx-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid;
+  border-radius: 16px;
+  padding: 1.5rem;
+  transition: background 0.3s, transform 0.3s;
+}
+.tx-card:hover {
+  background: rgba(255,255,255,0.07);
+  transform: translateY(-5px);
+}
+
+.tx-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.tx-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  animation: pulse 2s ease-in-out infinite;
+}
+.tx-signal-id {
+  font-family: var(--heading);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+.tx-strength {
+  margin-left: auto;
+  font-size: 0.62rem;
+  color: var(--text-dim);
+  font-family: var(--heading);
+  letter-spacing: 0.5px;
+}
+
+@keyframes waveAnim {
+  0%,100% { transform: scaleY(1); }
+  50%      { transform: scaleY(0.35); }
+}
+.tx-wave {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: 28px;
+  margin-bottom: 1.2rem;
+  overflow: hidden;
+}
+.tx-bar {
+  width: 3px;
+  border-radius: 2px;
+  flex-shrink: 0;
+  animation: waveAnim 1.5s ease-in-out infinite;
+}
+
+.tx-quote {
+  font-size: 0.88rem;
+  color: var(--text-mid);
+  line-height: 1.72;
+  font-style: italic;
+  margin-bottom: 1.2rem;
+  position: relative;
+  padding-left: 0.8rem;
+  border-left: 2px solid rgba(139,92,246,0.25);
+}
+
+.tx-source {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+}
+.tx-name {
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+.tx-role {
+  font-size: 0.71rem;
+  color: var(--text-dim);
+}
+.tx-live-badge {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-family: var(--heading);
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+/* ─── TESTIMONIALS (legacy) ────────────────────────────── */
 .rec-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -1018,6 +1180,49 @@ body {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
+}
+
+/* ─── PLANET CLARITY ─────────────────────────────────── */
+.planet-number {
+  font-family: var(--heading);
+  font-size: 0.56rem;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  color: var(--text-dim);
+  margin-bottom: 0.25rem;
+  text-align: center;
+  transition: color 0.2s;
+}
+.planet-card:hover .planet-number { color: var(--text-mid); }
+
+.planet-company-tag {
+  font-size: 0.64rem;
+  color: var(--text-dim);
+  text-align: center;
+  margin-top: 0.15rem;
+  margin-bottom: 0.3rem;
+}
+
+.planet-hint {
+  font-size: 0.63rem;
+  color: var(--purple);
+  text-align: center;
+  margin-top: 0.45rem;
+  opacity: 0;
+  transform: translateY(3px);
+  transition: opacity 0.2s, transform 0.2s;
+  letter-spacing: 0.4px;
+}
+.planet-card:hover .planet-hint {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── SKILL LEGEND COUNT ──────────────────────────────── */
+.legend-count {
+  font-size: 0.66rem;
+  opacity: 0.6;
+  margin-left: 0.1rem;
 }
 
 /* ─── SKILL MAP (STARS) ──────────────────────────────── */

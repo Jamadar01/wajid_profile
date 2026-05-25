@@ -80,10 +80,14 @@ export default function SkillMap() {
   return (
     <section id="skills" className="space-section">
       <p className="section-label">Skills</p>
-      <h2 className="section-heading">Star Map</h2>
+      <h2 className="section-heading">Skill Constellation</h2>
       <div className="section-divider" />
+      <p className="about-text" style={{ marginBottom: '0.6rem', maxWidth: 560 }}>
+        Every star is a real skill I use. Lines group related skills into constellations.
+      </p>
       <p className="about-text" style={{ marginBottom: '1.5rem', maxWidth: 560 }}>
-        Each star is a skill. Lines connect related skills into constellations. Hover a star — click a legend to highlight.
+        <span style={{ color: '#A78BFA' }}>Hover</span> any star to see its name ·{' '}
+        <span style={{ color: '#38BDF8' }}>Click</span> a category below to spotlight that constellation.
       </p>
 
       {/* Legend */}
@@ -100,6 +104,7 @@ export default function SkillMap() {
           >
             <span className="legend-dot" style={{ background: c.color, boxShadow: `0 0 6px ${c.color}` }} />
             {c.name}
+            <span className="legend-count">({c.stars.length})</span>
           </button>
         ))}
       </div>

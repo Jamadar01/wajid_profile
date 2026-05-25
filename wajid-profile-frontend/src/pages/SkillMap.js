@@ -3,7 +3,7 @@ import { useFetch } from '../hooks/useFetch';
 
 export default function SkillMap() {
   const { data } = useFetch('/api/skills/constellations');
-  const CONSTELLATIONS = data?.constellations || [];
+  const CONSTELLATIONS = useMemo(() => data?.constellations || [], [data]);
 
   const [hovered, setHovered] = useState(null);
   const [active, setActive]   = useState(null);

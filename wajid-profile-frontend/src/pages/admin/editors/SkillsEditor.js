@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { api } from '../../../api';
 import { useAuth } from '../../../context/AuthContext';
-import { Field, SaveBtn, StatusMsg } from './shared';
+import { SaveBtn, StatusMsg } from './shared';
 
 const inputStyle = {
   width: '100%', background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)',

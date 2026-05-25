@@ -16,7 +16,7 @@ import Experience      from './pages/Experience';
 import Projects        from './pages/Projects';
 import SkillMap        from './pages/SkillMap';
 import Hackathons      from './pages/Hackathons';
-import Recommendations from './components/Recommendations';
+//import Recommendations from './components/Recommendations';
 
 function Portfolio() {
   /* 2-D mouse parallax — CSS custom properties, no re-renders */

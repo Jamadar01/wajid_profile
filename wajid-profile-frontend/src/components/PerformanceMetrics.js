@@ -1,58 +1,41 @@
-// components/PerformanceMetrics.js
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
-function PerformanceMetrics() {
-  const [metrics, setMetrics] = useState({
-    projects: 0,
-    commits: 0,
-    linesOfCode: 0,
-  });
+const targets = { projects: 15, commits: 1200, lines: 50000 };
+const steps   = { projects: 1,  commits: 25,   lines: 600   };
+
+export default function PerformanceMetrics() {
+  const [v, setV] = useState({ projects: 0, commits: 0, lines: 0 });
 
   useEffect(() => {
-    // Dummy animated counters
-    let projects = 0;
-    let commits = 0;
-    let lines = 0;
-
-    const interval = setInterval(() => {
-      projects = Math.min(projects + 1, 15); // total projects
-      commits = Math.min(commits + 10, 1200); // total commits
-      lines = Math.min(lines + 50, 50000); // total lines of code
-
-      setMetrics({
-        projects,
-        commits,
-        linesOfCode: lines,
-      });
-
-      if (projects === 15 && commits === 1200 && lines === 50000) {
-        clearInterval(interval);
+    let cur = { projects: 0, commits: 0, lines: 0 };
+    const id = setInterval(() => {
+      let done = true;
+      const next = {};
+      for (const k of Object.keys(targets)) {
+        next[k] = Math.min(cur[k] + steps[k], targets[k]);
+        if (next[k] < targets[k]) done = false;
+        cur[k] = next[k];
       }
-    }, 50);
-
-    return () => clearInterval(interval);
+      setV({ ...next });
+      if (done) clearInterval(id);
+    }, 35);
+    return () => clearInterval(id);
   }, []);
 
+  const cards = [
+    { value: `${v.projects}+`,                   label: 'Projects Completed' },
+    { value: `${v.commits}+`,                     label: 'GitHub Commits'     },
+    { value: `${v.lines.toLocaleString()}+`,       label: 'Lines of Code'      },
+  ];
+
   return (
-    <div className="sub-section">
-      <h2>Performance Metrics 🚀</h2>
-      <div className="metrics-grid">
-        <div className="metric-card">
-          <h3>{metrics.projects}+</h3>
-          <p>Projects Completed</p>
+    <div className="metrics-grid" style={{ marginTop: '2rem' }}>
+      {cards.map(({ value, label }) => (
+        <div key={label} className="metric-card">
+          <div className="metric-value">{value}</div>
+          <div className="metric-label">{label}</div>
         </div>
-        <div className="metric-card">
-          <h3>{metrics.commits}+</h3>
-          <p>GitHub Commits</p>
-        </div>
-        <div className="metric-card">
-          <h3>{metrics.linesOfCode.toLocaleString()}+</h3>
-          <p>Lines of Code Written</p>
-        </div>
-      </div>
+      ))}
     </div>
   );
 }
-
-export default PerformanceMetrics;
-

@@ -595,22 +595,7 @@ body {
 }
 .skill-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 
-/* ─── HACKATHONS ──────────────────────────────────────── */
-.hack-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.2rem;
-}
-.hack-rank {
-  font-family: var(--heading);
-  font-size: 2.5rem;
-  font-weight: 700;
-  background: var(--grad);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-bottom: 0.3rem;
-}
+/* ─── HACKATHONS (shared text styles) ────────────────────── */
 .hack-name {
   font-family: var(--heading);
   font-size: 1rem;
@@ -664,24 +649,200 @@ body {
 .rec-name { font-weight: 600; font-size: 0.88rem; color: var(--text); }
 .rec-role { font-size: 0.75rem; color: var(--text-dim); margin-top: 2px; }
 
-/* ─── EXPERIENCE GALAXY ────────────────────────────────── */
-@keyframes galaxySpin {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
+/* ─── EXPERIENCE MISSION CARDS ─────────────────────────── */
+.exp-m-list {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  gap: 2rem;
 }
-
-.exp-galaxy-card { overflow: visible; }
-
-.exp-galaxy {
+.exp-m-list::before {
+  content: '';
   position: absolute;
-  top: -20px;
-  right: -20px;
-  width: 110px;
-  height: 110px;
-  opacity: 0.55;
+  left: 59px;
+  top: 100px;
+  bottom: 100px;
+  width: 1px;
+  background: linear-gradient(to bottom, #8B5CF6, #06B6D4 50%, #EC4899);
+  opacity: 0.2;
   pointer-events: none;
-  animation: galaxySpin 20s linear infinite;
 }
+
+.exp-m-card {
+  display: flex;
+  gap: 2rem;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid;
+  border-radius: 20px;
+  padding: 2rem;
+  transition: background 0.3s, transform 0.3s;
+}
+.exp-m-card:hover {
+  background: rgba(255,255,255,0.07);
+  transform: translateX(6px);
+}
+
+.exp-m-visual {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.7rem;
+  flex-shrink: 0;
+  width: 120px;
+}
+
+.exp-m-planet-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.exp-m-orbit {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid;
+  animation: orbitalSpin 9s linear infinite;
+  pointer-events: none;
+}
+
+.exp-m-orbit-dot {
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+
+.exp-m-planet {
+  border-radius: 50%;
+  flex-shrink: 0;
+  animation: planetFloat 5s ease-in-out infinite;
+  position: relative;
+}
+
+.exp-m-ring {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%) rotateX(72deg);
+  width: 170%; height: 170%;
+  border-radius: 50%;
+  border: 5px solid;
+  pointer-events: none;
+}
+
+.exp-m-badge {
+  font-family: var(--heading);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 20px;
+  border: 1px solid;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.exp-m-body { flex: 1; min-width: 0; }
+
+@media (max-width: 640px) {
+  .exp-m-card { flex-direction: column; gap: 1.2rem; }
+  .exp-m-visual { flex-direction: row; width: 100%; justify-content: flex-start; }
+  .exp-m-list::before { display: none; }
+}
+
+/* ─── HACKATHON TROPHIES ─────────────────────────────────── */
+.hack-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.hack-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid;
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s, background 0.3s;
+  position: relative;
+}
+.hack-card:hover {
+  transform: translateY(-6px);
+  background: rgba(255,255,255,0.07);
+}
+
+.hack-card-glow-top {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 120px;
+  pointer-events: none;
+}
+
+.hack-trophy-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 150px;
+  flex-shrink: 0;
+}
+
+.hack-trophy-orbit {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 1px solid;
+  animation: orbitalSpin 10s linear infinite;
+  pointer-events: none;
+}
+.hack-trophy-dot {
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.hack-trophy-badge {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 1px solid;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  position: relative;
+  z-index: 1;
+}
+
+.hack-trophy-emoji {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.hack-trophy-rank {
+  font-family: var(--heading);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.hack-card-body {
+  padding: 0 1.5rem 1.5rem;
+  flex: 1;
+}
+
+.hack-card-badges { margin-top: 1rem; }
 
 /* ─── PROJECTS (PLANETS) ──────────────────────────────── */
 @keyframes planetFloat {

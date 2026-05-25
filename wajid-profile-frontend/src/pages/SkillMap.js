@@ -1,81 +1,22 @@
-import React, { useState } from 'react';
-
-const CONSTELLATIONS = [
-  {
-    name: 'Languages', color: '#A78BFA',
-    stars: [
-      { id: 'js',   label: 'JavaScript', x: 14, y: 20, r: 1.1 },
-      { id: 'py',   label: 'Python',     x: 23, y: 30, r: 1.0 },
-      { id: 'cpp',  label: 'C++',        x: 9,  y: 39, r: 0.9 },
-      { id: 'java', label: 'Java',       x: 19, y: 13, r: 0.9 },
-      { id: 'c',    label: 'C',          x: 5,  y: 27, r: 0.8 },
-    ],
-    lines: [['js','py'],['py','cpp'],['cpp','c'],['js','java'],['java','py']],
-  },
-  {
-    name: 'Frontend', color: '#38BDF8',
-    stars: [
-      { id: 'react',     label: 'React.js',  x: 68, y: 12, r: 1.1 },
-      { id: 'angular',   label: 'AngularJS', x: 80, y: 19, r: 0.9 },
-      { id: 'html',      label: 'HTML5',     x: 74, y: 28, r: 0.9 },
-      { id: 'css3',      label: 'CSS3',      x: 85, y: 24, r: 0.8 },
-      { id: 'bootstrap', label: 'Bootstrap', x: 82, y: 36, r: 0.8 },
-    ],
-    lines: [['react','html'],['html','css3'],['html','angular'],['angular','bootstrap'],['css3','bootstrap']],
-  },
-  {
-    name: 'Backend', color: '#34D399',
-    stars: [
-      { id: 'node',    label: 'Node.js',    x: 18, y: 58, r: 1.1 },
-      { id: 'express', label: 'Express.js', x: 29, y: 66, r: 0.9 },
-      { id: 'django',  label: 'Django',     x: 11, y: 73, r: 0.8 },
-      { id: 'php',     label: 'PHP',        x: 24, y: 79, r: 0.8 },
-    ],
-    lines: [['node','express'],['express','django'],['express','php']],
-  },
-  {
-    name: 'Databases', color: '#FCD34D',
-    stars: [
-      { id: 'mongo',    label: 'MongoDB',  x: 47, y: 50, r: 1.0 },
-      { id: 'mysql',    label: 'MySQL',    x: 57, y: 58, r: 0.9 },
-      { id: 'pinecone', label: 'Pinecone', x: 43, y: 65, r: 0.8 },
-    ],
-    lines: [['mongo','mysql'],['mongo','pinecone'],['mysql','pinecone']],
-  },
-  {
-    name: 'AI & Cloud', color: '#F472B6',
-    stars: [
-      { id: 'openai',  label: 'OpenAI',     x: 72, y: 52, r: 1.1 },
-      { id: 'gemini',  label: 'Gemini',     x: 83, y: 60, r: 1.0 },
-      { id: 'gcp',     label: 'GCP',        x: 76, y: 70, r: 0.9 },
-      { id: 'k8s',     label: 'Kubernetes', x: 65, y: 76, r: 0.8 },
-      { id: 'vertex',  label: 'Vertex AI',  x: 91, y: 48, r: 0.8 },
-    ],
-    lines: [['openai','gemini'],['gemini','gcp'],['gcp','k8s'],['openai','vertex'],['gemini','vertex']],
-  },
-  {
-    name: 'Tools', color: '#60A5FA',
-    stars: [
-      { id: 'github',  label: 'GitHub',     x: 35, y: 86, r: 0.9 },
-      { id: 'postman', label: 'Postman',    x: 46, y: 92, r: 0.8 },
-      { id: 'figma',   label: 'Figma',      x: 56, y: 87, r: 0.8 },
-      { id: 'ws',      label: 'WebSockets', x: 65, y: 93, r: 0.8 },
-    ],
-    lines: [['github','postman'],['postman','figma'],['figma','ws']],
-  },
-];
-
-/* Build a lookup map id → {x,y} for drawing lines */
-const starMap = {};
-CONSTELLATIONS.forEach(c => c.stars.forEach(s => { starMap[s.id] = { x: s.x, y: s.y, color: c.color }; }));
+import React, { useState, useMemo } from 'react';
+import { useFetch } from '../hooks/useFetch';
 
 export default function SkillMap() {
+  const { data } = useFetch('/api/skills/constellations');
+  const CONSTELLATIONS = data?.constellations || [];
+
   const [hovered, setHovered] = useState(null);
   const [active, setActive]   = useState(null);
 
-  const activeCon = active
-    ? CONSTELLATIONS.find(c => c.name === active)
-    : null;
+  const starMap = useMemo(() => {
+    const map = {};
+    CONSTELLATIONS.forEach(c => c.stars.forEach(s => {
+      map[s.id] = { x: s.x, y: s.y, color: c.color };
+    }));
+    return map;
+  }, [CONSTELLATIONS]);
+
+  const activeCon = active ? CONSTELLATIONS.find(c => c.name === active) : null;
 
   return (
     <section id="skills" className="space-section">
@@ -90,7 +31,6 @@ export default function SkillMap() {
         <span style={{ color: '#38BDF8' }}>Click</span> a category below to spotlight that constellation.
       </p>
 
-      {/* Legend */}
       <div className="constellation-legend">
         {CONSTELLATIONS.map(c => (
           <button
@@ -109,7 +49,6 @@ export default function SkillMap() {
         ))}
       </div>
 
-      {/* SVG constellation map */}
       <div className="starmap-wrap">
         <svg
           viewBox="0 0 100 100"
@@ -125,7 +64,6 @@ export default function SkillMap() {
             ))}
           </defs>
 
-          {/* Background micro-stars */}
           {Array.from({ length: 60 }, (_, i) => (
             <circle
               key={i}
@@ -137,10 +75,10 @@ export default function SkillMap() {
             />
           ))}
 
-          {/* Constellation lines */}
           {CONSTELLATIONS.map(c =>
             c.lines.map(([a, b]) => {
               const sa = starMap[a], sb = starMap[b];
+              if (!sa || !sb) return null;
               const isActive = !activeCon || activeCon.name === c.name;
               return (
                 <line
@@ -156,14 +94,12 @@ export default function SkillMap() {
             })
           )}
 
-          {/* Stars */}
           {CONSTELLATIONS.map(c =>
             c.stars.map(s => {
               const isActive = !activeCon || activeCon.name === c.name;
               const isHovered = hovered === s.id;
               return (
                 <g key={s.id}>
-                  {/* Outer glow ring */}
                   <circle
                     cx={s.x} cy={s.y}
                     r={isHovered ? s.r * 3.5 : s.r * 2}
@@ -171,7 +107,6 @@ export default function SkillMap() {
                     opacity={isHovered ? 0.2 : 0.06}
                     style={{ transition: 'all 0.25s' }}
                   />
-                  {/* Star body */}
                   <circle
                     cx={s.x} cy={s.y}
                     r={isHovered ? s.r * 1.6 : s.r}
@@ -182,7 +117,6 @@ export default function SkillMap() {
                     onMouseEnter={() => setHovered(s.id)}
                     onMouseLeave={() => setHovered(null)}
                   />
-                  {/* Label — shows on hover */}
                   {isHovered && (
                     <text
                       x={s.x + (s.x > 50 ? -1.5 : 1.5)}

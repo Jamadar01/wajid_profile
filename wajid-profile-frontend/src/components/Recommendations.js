@@ -1,37 +1,13 @@
 import React from 'react';
-
-const TRANSMISSIONS = [
-  {
-    signal: 'ALPHA-1',
-    quote: 'Wajid is a highly resourceful developer who always finds elegant solutions to complex problems.',
-    name: 'John Doe',
-    role: 'Tech Lead @ CompanyX',
-    strength: 98,
-    color: '#8B5CF6',
-  },
-  {
-    signal: 'BETA-2',
-    quote: 'His problem-solving and teamwork skills are absolutely top-notch. A pleasure to work with.',
-    name: 'Jane Smith',
-    role: 'Product Manager @ StartupY',
-    strength: 95,
-    color: '#06B6D4',
-  },
-  {
-    signal: 'GAMMA-3',
-    quote: 'Always delivers high-quality work on time. A genuinely great team player and communicator!',
-    name: 'Alex Lee',
-    role: 'Software Engineer @ DevHouse',
-    strength: 97,
-    color: '#EC4899',
-  },
-];
+import { useFetch } from '../hooks/useFetch';
 
 export default function Recommendations() {
+  const { data: transmissions } = useFetch('/api/recommendations', []);
+
   return (
     <div className="tx-grid">
-      {TRANSMISSIONS.map((t, i) => (
-        <div key={i} className="tx-card" style={{ borderColor: `${t.color}22` }}>
+      {transmissions.map((t, i) => (
+        <div key={t._id} className="tx-card" style={{ borderColor: `${t.color}22` }}>
 
           <div className="tx-header">
             <span className="tx-status-dot" style={{ background: t.color, boxShadow: `0 0 7px ${t.color}` }} />

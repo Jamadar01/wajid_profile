@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { projectsData } from '../data/projectsData';
+import { useFetch } from '../hooks/useFetch';
 
 function Planet({ project, selected, onClick, index }) {
   const { name, color, glow, highlight, ring, size } = project;
@@ -52,9 +52,10 @@ function Planet({ project, selected, onClick, index }) {
 }
 
 export default function Projects() {
+  const { data: projects } = useFetch('/api/projects', []);
   const [selected, setSelected] = useState(null);
 
-  const handleSelect = (p) => setSelected(prev => prev?.id === p.id ? null : p);
+  const handleSelect = (p) => setSelected(prev => prev?._id === p._id ? null : p);
 
   return (
     <section id="projects" className="space-section">
@@ -66,12 +67,12 @@ export default function Projects() {
       </p>
 
       <div className="planet-grid">
-        {projectsData.map((p, i) => (
+        {projects.map((p, i) => (
           <Planet
-            key={p.id}
+            key={p._id}
             project={p}
             index={i}
-            selected={selected?.id === p.id}
+            selected={selected?._id === p._id}
             onClick={handleSelect}
           />
         ))}

@@ -1,29 +1,5 @@
 import React from 'react';
-
-const hacks = [
-  {
-    rank: 'Top 10',
-    name: 'Web Development Hackathon',
-    org: 'IIT Hyderabad · Nov 2023',
-    desc: 'Ranked Top 10 out of 300+ competing teams. Built a fully functional, production-ready web application end-to-end within the hackathon window.',
-    badges: [{ label: '300 Teams', cls: 'gold' }, { label: 'Full-Stack', cls: 'blue' }],
-    color: '#FCD34D',
-    glow: 'rgba(252,211,77,0.4)',
-    emoji: '🏆',
-    orbitDur: '10s',
-  },
-  {
-    rank: '24 hrs',
-    name: 'AI Amplify Hackathon',
-    org: 'Finance-1 × Atrina · Sep 2023',
-    desc: 'Designed and deployed a fully functional AI model in a 24-hour intensive sprint challenge hosted by Finance-1 and Atrina Technologies.',
-    badges: [{ label: '24H Sprint', cls: 'purple' }, { label: 'AI / ML', cls: 'blue' }],
-    color: '#A78BFA',
-    glow: 'rgba(167,139,250,0.4)',
-    emoji: '⚡',
-    orbitDur: '13s',
-  },
-];
+import { useFetch } from '../hooks/useFetch';
 
 function TrophyBadge({ h }) {
   return (
@@ -50,6 +26,8 @@ function TrophyBadge({ h }) {
 }
 
 export default function Hackathons() {
+  const { data: hacks } = useFetch('/api/hackathons', []);
+
   return (
     <section id="hackathons" className="space-section">
       <p className="section-label">Achievements</p>
@@ -57,9 +35,9 @@ export default function Hackathons() {
       <div className="section-divider" />
 
       <div className="hack-grid">
-        {hacks.map((h, i) => (
+        {hacks.map((h) => (
           <div
-            key={i}
+            key={h._id}
             className="hack-card"
             style={{ borderColor: `${h.color}22` }}
           >

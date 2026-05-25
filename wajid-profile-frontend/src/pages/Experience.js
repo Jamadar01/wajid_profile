@@ -1,5 +1,5 @@
 import React from 'react';
-import { experienceData } from '../data/experinceData';
+import { useFetch } from '../hooks/useFetch';
 
 const MISSION_STYLES = [
   { color: '#8B5CF6', glow: 'rgba(139,92,246,0.5)', highlight: '#A78BFA', ring: true,  size: 76 },
@@ -41,6 +41,8 @@ function MissionPlanet({ ms, index }) {
 }
 
 export default function Experience() {
+  const { data: experiences } = useFetch('/api/experience', []);
+
   return (
     <section id="experience" className="space-section">
       <p className="section-label">Career</p>
@@ -48,10 +50,10 @@ export default function Experience() {
       <div className="section-divider" />
 
       <div className="exp-m-list">
-        {experienceData.map((exp, i) => {
+        {experiences.map((exp, i) => {
           const ms = MISSION_STYLES[i % MISSION_STYLES.length];
           return (
-            <div key={i} className="exp-m-item">
+            <div key={exp._id} className="exp-m-item">
               <div className="exp-m-card" style={{ borderColor: `${ms.color}22` }}>
                 <MissionPlanet ms={ms} index={i} />
                 <div className="exp-m-body">

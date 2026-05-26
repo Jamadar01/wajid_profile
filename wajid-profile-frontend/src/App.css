@@ -209,7 +209,6 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  text-align: center;
   padding: 3rem 2rem;
   position: relative;
 }
@@ -217,6 +216,118 @@ body {
 .hero-inner {
   max-width: 720px;
   margin: 0 auto;
+  text-align: center;
+}
+
+.hero-split {
+  max-width: 1100px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  text-align: left;
+}
+
+/* ── Left column ── */
+.hero-text { display: flex; flex-direction: column; }
+
+.hero-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(52,211,153,0.08);
+  border: 1px solid rgba(52,211,153,0.3);
+  border-radius: 20px;
+  padding: 5px 14px;
+  color: #34d399;
+  font-size: 0.78rem;
+  letter-spacing: 0.5px;
+  margin-bottom: 1.4rem;
+  width: fit-content;
+}
+.hero-status-dot {
+  width: 7px; height: 7px;
+  background: #34d399;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #34d399;
+  animation: pulseGlow 2s ease-in-out infinite;
+}
+@keyframes pulseGlow {
+  0%,100% { opacity: 1; box-shadow: 0 0 8px #34d399; }
+  50%      { opacity: 0.5; box-shadow: 0 0 16px #34d399; }
+}
+
+.hero-typed-prefix {
+  color: var(--purple);
+  font-family: monospace;
+  font-size: 1rem;
+}
+
+/* ── Right column ── */
+.hero-visual {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  position: relative;
+}
+
+/* Floating tech badges */
+.hero-badge-float {
+  position: absolute;
+  background: rgba(15,15,35,0.85);
+  border: 1px solid rgba(167,139,250,0.35);
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-size: 0.75rem;
+  color: #c4b5fd;
+  letter-spacing: 0.5px;
+  backdrop-filter: blur(8px);
+  animation: floatSlow 4s ease-in-out infinite;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* Coordinates display */
+.hero-coords {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.7rem;
+  color: #4b5563;
+  letter-spacing: 1px;
+  font-family: monospace;
+}
+
+/* Third orbit ring */
+.hero-orbit-ring-3 {
+  position: absolute;
+  inset: -58px;
+  border-radius: 50%;
+  border: 1px dashed rgba(139,92,246,0.08);
+  animation: orbitalSpin 22s linear infinite;
+}
+.hero-orbit-ring-3::before {
+  content: '';
+  position: absolute;
+  top: 30%;
+  left: -4px;
+  width: 5px; height: 5px;
+  background: rgba(167,139,250,0.5);
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(167,139,250,0.5);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .hero-split {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 3rem;
+  }
+  .hero-text { align-items: center; }
+  .hero-status-badge { align-self: center; }
+  .hero-badge-float { display: none; }
+  .hero-coords { justify-content: center; }
 }
 
 /* Orbital profile pic */
@@ -381,6 +492,28 @@ body {
   color: var(--text);
   border-color: var(--border-glow);
   background: var(--glass);
+}
+
+/* ─── ABOUT 3D TILT ───────────────────────────────────── */
+.about-tilt-card {
+  position: relative;
+  overflow: visible !important;
+}
+.about-card-float-icon {
+  position: absolute;
+  top: -14px;
+  right: 14px;
+  font-size: 1.6rem;
+  filter: drop-shadow(0 0 10px rgba(167,139,250,0.6));
+  pointer-events: none;
+  transition: transform 0.3s ease;
+}
+.about-tag-3d {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+.about-tilt-card:hover .about-card-float-icon {
+  filter: drop-shadow(0 0 18px rgba(167,139,250,0.9));
 }
 
 /* ─── ABOUT — CREW PROFILE ─────────────────────────────── */

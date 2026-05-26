@@ -54,7 +54,8 @@ export default function Experience() {
           const ms = MISSION_STYLES[i % MISSION_STYLES.length];
           return (
             <div key={exp._id} className="exp-m-item">
-              <div className="exp-m-card" style={{ borderColor: `${ms.color}22` }}>
+              <a href={exp.link} target="_blank" rel="noreferrer" style={{ textDecoration: 'none', display: 'block' }}>
+              <div className="exp-m-card" style={{ borderColor: `${ms.color}22`, cursor: 'pointer' }}>
                 <MissionPlanet ms={ms} index={i} />
                 <div className="exp-m-body">
                   <div className="exp-card-header">
@@ -71,17 +72,15 @@ export default function Experience() {
                       <li key={j}>{r}</li>
                     ))}
                   </ul>
-                  <a
-                    href={exp.link}
-                    target="_blank"
-                    rel="noreferrer"
+                  <span
                     className="exp-link"
                     style={{ color: ms.color, borderBottomColor: `${ms.color}44` }}
                   >
                     Visit Company ↗
-                  </a>
+                  </span>
                 </div>
               </div>
+              </a>
             </div>
           );
         })}

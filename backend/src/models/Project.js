@@ -11,6 +11,11 @@ const projectSchema = new mongoose.Schema({
   tech:      [{ type: String }],
   company:   { type: String },
   desc:      { type: String },
+  problem:   { type: String },
+  solution:  { type: String },
+  result:    { type: String },
+  liveUrl:   { type: String },
+  repoUrl:   { type: String },
   order:     { type: Number, default: 0 },
 }, { timestamps: true });
 

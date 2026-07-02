@@ -3,7 +3,7 @@ import { api } from '../../../api';
 import { useAuth } from '../../../context/AuthContext';
 import { Field, Textarea, SaveBtn, StatusMsg, ItemCard, FormCard, AddBtn } from './shared';
 
-const blank = { name: '', emoji: '🚀', color: '#7C3AED', glow: '', highlight: '', ring: false, size: 72, tech: '', company: '', desc: '', order: 0 };
+const blank = { name: '', emoji: '🚀', color: '#7C3AED', glow: '', highlight: '', ring: false, size: 72, tech: '', company: '', desc: '', problem: '', solution: '', result: '', liveUrl: '', repoUrl: '', order: 0 };
 
 export default function ProjectsEditor() {
   const { token } = useAuth();
@@ -70,6 +70,13 @@ export default function ProjectsEditor() {
           </div>
           <Field label="Tech (comma-separated)" value={form.tech} onChange={v => set('tech', v)} />
           <Textarea label="Description" value={form.desc} onChange={v => set('desc', v)} rows={3} />
+          <Textarea label="Case Study — The Problem" value={form.problem || ''} onChange={v => set('problem', v)} rows={2} />
+          <Textarea label="Case Study — What I Built" value={form.solution || ''} onChange={v => set('solution', v)} rows={2} />
+          <Textarea label="Case Study — The Result" value={form.result || ''} onChange={v => set('result', v)} rows={2} />
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 16px' }}>
+            <Field label="Live URL" value={form.liveUrl || ''} onChange={v => set('liveUrl', v)} />
+            <Field label="Repo URL" value={form.repoUrl || ''} onChange={v => set('repoUrl', v)} />
+          </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16 }}>
             <label style={{ color: '#9ca3af', fontSize: 12, letterSpacing: 1 }}>RING</label>
             <input type="checkbox" checked={Boolean(form.ring)}

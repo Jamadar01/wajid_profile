@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useFetch } from '../hooks/useFetch';
+import SectionStatus from '../components/SectionStatus';
 
 function Planet({ project, selected, onClick, index }) {
   const { name, color, glow, highlight, ring, size } = project;
@@ -52,7 +53,7 @@ function Planet({ project, selected, onClick, index }) {
 }
 
 export default function Projects() {
-  const { data: projects } = useFetch('/api/projects', []);
+  const { data: projects, loading, error } = useFetch('/api/projects', []);
   const [selected, setSelected] = useState(null);
 
   const handleSelect = (p) => setSelected(prev => prev?._id === p._id ? null : p);
@@ -65,6 +66,7 @@ export default function Projects() {
       <p className="about-text" style={{ marginBottom: '2rem', maxWidth: 580 }}>
         Each planet represents a real project I built. Click any planet to reveal its full story — tech stack, description, and company.
       </p>
+      <SectionStatus loading={loading} error={error} empty={!projects.length} />
 
       <div className="planet-grid">
         {projects.map((p, i) => (
@@ -94,6 +96,30 @@ export default function Projects() {
             <button className="planet-close" onClick={() => setSelected(null)}>✕</button>
           </div>
           <p className="planet-detail-desc">{selected.desc}</p>
+
+          {(selected.problem || selected.solution || selected.result) && (
+            <div className="case-study">
+              {selected.problem && (
+                <div className="case-block">
+                  <p className="case-label" style={{ color: selected.color }}>The Problem</p>
+                  <p className="case-text">{selected.problem}</p>
+                </div>
+              )}
+              {selected.solution && (
+                <div className="case-block">
+                  <p className="case-label" style={{ color: selected.color }}>What I Built</p>
+                  <p className="case-text">{selected.solution}</p>
+                </div>
+              )}
+              {selected.result && (
+                <div className="case-block">
+                  <p className="case-label" style={{ color: selected.color }}>The Result</p>
+                  <p className="case-text">{selected.result}</p>
+                </div>
+              )}
+            </div>
+          )}
+
           <div className="planet-detail-tech">
             {selected.tech.map(t => (
               <span
@@ -105,6 +131,23 @@ export default function Projects() {
               </span>
             ))}
           </div>
+
+          {(selected.liveUrl || selected.repoUrl) && (
+            <div className="planet-detail-links">
+              {selected.liveUrl && (
+                <a className="btn-primary" href={selected.liveUrl} target="_blank" rel="noreferrer"
+                  style={{ padding: '8px 20px', fontSize: '0.82rem' }}>
+                  Live Demo ↗
+                </a>
+              )}
+              {selected.repoUrl && (
+                <a className="btn-ghost" href={selected.repoUrl} target="_blank" rel="noreferrer"
+                  style={{ padding: '7px 18px', fontSize: '0.82rem' }}>
+                  View Code ↗
+                </a>
+              )}
+            </div>
+          )}
         </div>
       )}
     </section>

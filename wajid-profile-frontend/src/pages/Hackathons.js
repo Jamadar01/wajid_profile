@@ -1,5 +1,6 @@
 import React from 'react';
 import { useFetch } from '../hooks/useFetch';
+import SectionStatus from '../components/SectionStatus';
 
 function TrophyBadge({ h }) {
   return (
@@ -26,13 +27,14 @@ function TrophyBadge({ h }) {
 }
 
 export default function Hackathons() {
-  const { data: hacks } = useFetch('/api/hackathons', []);
+  const { data: hacks, loading, error } = useFetch('/api/hackathons', []);
 
   return (
     <section id="hackathons" className="space-section">
       <p className="section-label">Achievements</p>
       <h2 className="section-heading">Space Trophies</h2>
       <div className="section-divider" />
+      <SectionStatus loading={loading} error={error} empty={!hacks.length} />
 
       <div className="hack-grid">
         {hacks.map((h) => (

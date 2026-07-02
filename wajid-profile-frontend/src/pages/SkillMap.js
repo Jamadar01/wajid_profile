@@ -1,8 +1,9 @@
 import React, { useState, useMemo } from 'react';
 import { useFetch } from '../hooks/useFetch';
+import SectionStatus from '../components/SectionStatus';
 
 export default function SkillMap() {
-  const { data } = useFetch('/api/skills/constellations');
+  const { data, loading, error } = useFetch('/api/skills/constellations');
   const CONSTELLATIONS = useMemo(() => data?.constellations || [], [data]);
 
   const [hovered, setHovered] = useState(null);
@@ -30,6 +31,7 @@ export default function SkillMap() {
         <span style={{ color: '#A78BFA' }}>Hover</span> any star to see its name ·{' '}
         <span style={{ color: '#38BDF8' }}>Click</span> a category below to spotlight that constellation.
       </p>
+      <SectionStatus loading={loading} error={error} empty={!CONSTELLATIONS.length} />
 
       <div className="constellation-legend">
         {CONSTELLATIONS.map(c => (

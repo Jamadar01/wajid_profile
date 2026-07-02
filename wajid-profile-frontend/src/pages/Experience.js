@@ -1,5 +1,6 @@
 import React from 'react';
 import { useFetch } from '../hooks/useFetch';
+import SectionStatus from '../components/SectionStatus';
 
 const MISSION_STYLES = [
   { color: '#8B5CF6', glow: 'rgba(139,92,246,0.5)', highlight: '#A78BFA', ring: true,  size: 76 },
@@ -41,13 +42,14 @@ function MissionPlanet({ ms, index }) {
 }
 
 export default function Experience() {
-  const { data: experiences } = useFetch('/api/experience', []);
+  const { data: experiences, loading, error } = useFetch('/api/experience', []);
 
   return (
     <section id="experience" className="space-section">
       <p className="section-label">Career</p>
       <h2 className="section-heading">Mission Log</h2>
       <div className="section-divider" />
+      <SectionStatus loading={loading} error={error} empty={!experiences.length} />
 
       <div className="exp-m-list">
         {experiences.map((exp, i) => {

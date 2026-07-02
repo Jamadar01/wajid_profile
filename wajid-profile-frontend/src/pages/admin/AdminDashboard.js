@@ -8,6 +8,7 @@ import ExperienceEditor     from './editors/ExperienceEditor';
 import ProjectsEditor       from './editors/ProjectsEditor';
 import HackathonsEditor     from './editors/HackathonsEditor';
 import RecommendationsEditor from './editors/RecommendationsEditor';
+import MessagesInbox         from './editors/MessagesInbox';
 
 const NAV = [
   { key: 'profile',         label: '👤 Profile' },
@@ -17,6 +18,7 @@ const NAV = [
   { key: 'skills',          label: '⚡ Skills' },
   { key: 'hackathons',      label: '🏆 Hackathons' },
   { key: 'recommendations', label: '📡 Recommendations' },
+  { key: 'messages',        label: '📬 Messages' },
 ];
 
 const EDITORS = {
@@ -27,6 +29,7 @@ const EDITORS = {
   skills:          <SkillsEditor />,
   hackathons:      <HackathonsEditor />,
   recommendations: <RecommendationsEditor />,
+  messages:        <MessagesInbox />,
 };
 
 export default function AdminDashboard() {

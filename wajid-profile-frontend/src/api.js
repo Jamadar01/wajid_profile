@@ -14,7 +14,7 @@ const req = (method, path, body, token) =>
   });
 
 export const api = {
-  get:    (path)                => req('GET',    path),
+  get:    (path, token)         => req('GET',    path, undefined, token),
   post:   (path, body, token)   => req('POST',   path, body, token),
   put:    (path, body, token)   => req('PUT',    path, body, token),
   delete: (path, token)         => req('DELETE', path, undefined, token),

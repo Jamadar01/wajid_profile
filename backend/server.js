@@ -11,6 +11,7 @@ const projectRoutes     = require('./src/routes/projects');
 const skillRoutes       = require('./src/routes/skills');
 const hackathonRoutes   = require('./src/routes/hackathons');
 const recommendationRoutes = require('./src/routes/recommendations');
+const messageRoutes     = require('./src/routes/messages');
 
 const app = express();
 
@@ -30,6 +31,7 @@ app.use('/api/projects',        projectRoutes);
 app.use('/api/skills',          skillRoutes);
 app.use('/api/hackathons',      hackathonRoutes);
 app.use('/api/recommendations', recommendationRoutes);
+app.use('/api/messages',        messageRoutes);
 
 app.get('/api/health', (_req, res) => res.json({ status: 'ok' }));
 

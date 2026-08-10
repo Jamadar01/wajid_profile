@@ -4,9 +4,16 @@ const authGuard = require('../middleware/auth');
 
 const router = express.Router();
 
-router.get('/', async (_req, res) => {
+/* ?kind=personal | company — docs seeded before `kind` existed have no value,
+   so they count as company work rather than disappearing. */
+router.get('/', async (req, res) => {
   try {
-    const docs = await Project.find().sort({ order: 1, createdAt: 1 });
+    const { kind } = req.query;
+    let filter = {};
+    if (kind === 'personal')     filter = { kind: 'personal' };
+    else if (kind === 'company') filter = { kind: { $ne: 'personal' } };
+
+    const docs = await Project.find(filter).sort({ order: 1, createdAt: 1 });
     res.json(docs);
   } catch (err) {
     res.status(500).json({ message: err.message });

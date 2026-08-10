@@ -14,6 +14,7 @@ import Hero            from './pages/Hero';
 import About           from './pages/About';
 import Experience      from './pages/Experience';
 import Projects        from './pages/Projects';
+import PersonalProjects from './pages/PersonalProjects';
 import SkillMap        from './pages/SkillMap';
 import Hackathons      from './pages/Hackathons';
 import Contact         from './pages/Contact';
@@ -55,6 +56,7 @@ function Portfolio() {
         <About />
         <Experience />
         <Projects />
+        <PersonalProjects />
         <SkillMap />
         <Hackathons />
         <GitHubActivity />

@@ -1336,6 +1336,34 @@ body {
   margin-bottom: 0.3rem;
 }
 
+/* ─── PERSONAL PROJECT CARD LINKS ─────────────────────── */
+.planet-card-links {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+
+.planet-card-link {
+  font-size: 0.63rem;
+  letter-spacing: 0.4px;
+  padding: 3px 10px;
+  border-radius: 4px;
+  border: 1px solid rgba(139, 92, 246, 0.28);
+  color: var(--text-mid);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+.planet-card-link:hover {
+  color: var(--text);
+  border-color: rgba(139, 92, 246, 0.6);
+  background: rgba(139, 92, 246, 0.1);
+}
+.planet-card-link-live:hover {
+  background: rgba(139, 92, 246, 0.16);
+}
+
 .planet-hint {
   font-size: 0.63rem;
   color: var(--purple);

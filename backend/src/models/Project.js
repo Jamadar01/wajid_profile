@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const projectSchema = new mongoose.Schema({
   name:      { type: String, required: true },
+  kind:      { type: String, enum: ['company', 'personal'], default: 'company', index: true },
   emoji:     { type: String, default: '🚀' },
   color:     { type: String, default: '#7C3AED' },
   glow:      { type: String },

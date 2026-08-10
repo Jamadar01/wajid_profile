@@ -121,7 +121,7 @@ const projectsSeed = [
     tech: ['OpenAI', 'Gemini', 'Node.js', 'WebSocket', 'React'],
     company: 'Wohlig Transformation',
     desc: 'Enterprise-grade AI chatbot with OpenAI & Gemini integration, real-time streaming responses, context-aware conversation management and multi-tenant support.',
-    order: 0,
+    kind: 'company', order: 0,
   },
   {
     name: 'Recommendation Engine', emoji: '🎯',
@@ -130,7 +130,7 @@ const projectsSeed = [
     tech: ['Vertex AI', 'Pinecone', 'Python', 'GCP'],
     company: 'Wohlig Transformation',
     desc: 'Personalized recommendation system using Google Vertex AI embeddings and Pinecone vector search for millisecond-latency retrieval at scale.',
-    order: 1,
+    kind: 'company', order: 1,
   },
   {
     name: 'Real-Time Sync App', emoji: '⚡',
@@ -139,7 +139,7 @@ const projectsSeed = [
     tech: ['WebSocket', 'Node.js', 'React', 'MongoDB'],
     company: 'Wohlig Transformation',
     desc: 'Real-time collaborative web application with WebSocket-driven live sync, conflict resolution and performance-optimised API layer.',
-    order: 2,
+    kind: 'company', order: 2,
   },
   {
     name: 'E-Commerce Platform', emoji: '🛒',
@@ -148,7 +148,7 @@ const projectsSeed = [
     tech: ['PHP', 'AngularJS', 'MySQL', 'WebSocket'],
     company: '43Appmart',
     desc: 'Cross-platform e-commerce solution with RESTful APIs, real-time order tracking via WebSocket, and a full admin dashboard.',
-    order: 3,
+    kind: 'company', order: 3,
   },
   {
     name: 'Social Campaign Portal', emoji: '📢',
@@ -157,7 +157,7 @@ const projectsSeed = [
     tech: ['React', 'Bootstrap', 'REST API'],
     company: 'IBM CSRBOX',
     desc: 'Social campaign management portal with analytics dashboard, multi-channel publishing, and consistent design system across 15+ UI components.',
-    order: 4,
+    kind: 'company', order: 4,
   },
   {
     name: 'IIT Hackathon App', emoji: '🏆',
@@ -166,7 +166,39 @@ const projectsSeed = [
     tech: ['React', 'Node.js', 'MongoDB'],
     company: 'IIT Hyderabad',
     desc: 'Full-stack web application built end-to-end in a hackathon window. Ranked Top 10 out of 300+ teams at the IIT Hyderabad Web Dev Hackathon.',
-    order: 5,
+    kind: 'company', order: 5,
+  },
+
+  /* ── Personal builds ──────────────────────────────────────
+     Side projects, own time. Replace the placeholder entries
+     below with your real ones — liveUrl / repoUrl show as
+     "Live ↗" and "Code ↗" buttons directly on the card.      */
+  {
+    name: 'Space Portfolio', emoji: '🪐',
+    color: '#8B5CF6', glow: 'rgba(139,92,246,0.5)', highlight: 'rgba(196,181,253,0.3)',
+    ring: true, size: 78,
+    tech: ['React', 'Node.js', 'Express', 'MongoDB', 'Three.js'],
+    desc: 'This site. A space-themed portfolio with a 3D hero scene, animated starfield, and a custom admin dashboard backed by a Node/Express/MongoDB API — every section is editable without a redeploy.',
+    repoUrl: 'https://github.com/Jamadar01/wajid_profile',
+    kind: 'personal', order: 0,
+  },
+  {
+    name: 'Your Project Name', emoji: '🔭',
+    color: '#22D3EE', glow: 'rgba(34,211,238,0.5)', highlight: 'rgba(103,232,249,0.3)',
+    ring: false, size: 68,
+    tech: ['React', 'Node.js'],
+    desc: 'Placeholder — swap in a real side project. Add liveUrl if it is hosted anywhere, and repoUrl for the GitHub link.',
+    liveUrl: '', repoUrl: '',
+    kind: 'personal', order: 1,
+  },
+  {
+    name: 'Your Project Name', emoji: '🛰',
+    color: '#F472B6', glow: 'rgba(244,114,182,0.5)', highlight: 'rgba(249,168,212,0.3)',
+    ring: false, size: 64,
+    tech: ['Python'],
+    desc: 'Placeholder — swap in a real side project, or delete this entry from the admin dashboard.',
+    liveUrl: '', repoUrl: '',
+    kind: 'personal', order: 2,
   },
 ];
 

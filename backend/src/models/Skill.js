@@ -6,6 +6,10 @@ const starSchema = new mongoose.Schema({
   x:     { type: Number, required: true },
   y:     { type: Number, required: true },
   r:     { type: Number, default: 1.0 },
+  /* Extra spellings this skill answers to when matching project tech tags.
+     The normaliser already handles React.js/React 19 and singular/plural, so
+     this is only for names it cannot reach — GCP vs "Google Cloud Platform". */
+  aliases: [{ type: String }],
 }, { _id: false });
 
 const skillSchema = new mongoose.Schema({

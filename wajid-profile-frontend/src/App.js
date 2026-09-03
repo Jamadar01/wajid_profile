@@ -26,18 +26,25 @@ import NotFound        from './pages/NotFound';
 //import Recommendations from './components/Recommendations';
 
 /* Coming back from /mission/:slug to /#experience changes the route, and the
-   router does not scroll to a hash on its own — so do it here. Waits a frame
-   for the target section to mount before scrolling. */
+   router does not scroll to a hash on its own — so do it here.
+ *
+ * Home route only. /mission/:slug resolves its own anchors, against content
+ * that arrives after a fetch, and two handlers racing the same hash is worse
+ * than one: this one's smooth scroll was cancelling the mission page's jump
+ * and leaving deep links stranded at the top. */
 function HashScroll() {
   const { pathname, hash } = useLocation();
 
   useEffect(() => {
+    if (pathname !== '/') return undefined;
     if (!hash) {
-      if (pathname === '/') window.scrollTo(0, 0);
-      return;
+      window.scrollTo(0, 0);
+      return undefined;
     }
     const raf = requestAnimationFrame(() => {
-      const el = document.querySelector(hash);
+      /* getElementById, not querySelector — an id can start with a digit
+         ("43appmart-…"), which is not a valid CSS selector. */
+      const el = document.getElementById(hash.slice(1));
       if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
     return () => cancelAnimationFrame(raf);

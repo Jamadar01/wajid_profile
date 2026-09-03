@@ -11,11 +11,13 @@ import StarField       from './components/StarField';
 import NebulaOrbs      from './components/NebulaOrbs';
 import SpaceNav        from './components/SpaceNav';
 import Hero            from './pages/Hero';
+import AvailabilityBanner from './components/AvailabilityBanner';
 import About           from './pages/About';
 import Experience      from './pages/Experience';
 import Projects        from './pages/Projects';
 import MissionDetail   from './pages/MissionDetail';
 import SkillMap        from './pages/SkillMap';
+import Certifications  from './pages/Certifications';
 import Hackathons      from './pages/Hackathons';
 import Contact         from './pages/Contact';
 import GitHubActivity  from './pages/GitHubActivity';
@@ -74,10 +76,12 @@ function Portfolio() {
       <SpaceNav />
       <main className="page-content">
         <Hero />
+        <AvailabilityBanner />
         <About />
         <Experience />
         <Projects />
         <SkillMap />
+        <Certifications />
         <Hackathons />
         <GitHubActivity />
         {/* <section className="space-section" id="testimonials">

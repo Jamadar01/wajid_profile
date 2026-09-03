@@ -2095,3 +2095,312 @@ body {
   .mission-project { padding: 1.3rem; }
   .mission-stat-row { gap: 1.4rem; }
 }
+
+/* ─── OPEN TO WORK BANNER ─────────────────────────────────── */
+.avail-section {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 2rem 2rem;
+}
+
+.avail-card {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, rgba(52,211,153,0.07), rgba(56,189,248,0.05));
+  border: 1px solid rgba(52,211,153,0.28);
+  border-radius: 20px;
+  padding: 2rem 2.2rem;
+}
+
+.avail-glow {
+  position: absolute;
+  top: -160px;
+  right: -120px;
+  width: 420px;
+  height: 420px;
+  background: radial-gradient(circle, rgba(52,211,153,0.16) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.avail-top { position: relative; margin-bottom: 1rem; }
+
+.avail-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--heading);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #34D399;
+  background: rgba(52,211,153,0.12);
+  border: 1px solid rgba(52,211,153,0.35);
+  border-radius: 20px;
+  padding: 6px 14px;
+}
+
+.avail-pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #34D399;
+  box-shadow: 0 0 10px #34D399;
+  animation: availPulse 2s ease-in-out infinite;
+}
+
+@keyframes availPulse {
+  0%, 100% { opacity: 1;   transform: scale(1); }
+  50%      { opacity: 0.4; transform: scale(0.8); }
+}
+
+.avail-headline {
+  position: relative;
+  font-family: var(--heading);
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text);
+  margin-bottom: 0.8rem;
+}
+
+.avail-blurb {
+  position: relative;
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: var(--text-mid);
+  max-width: 700px;
+  margin-bottom: 1.6rem;
+}
+
+.avail-label {
+  display: block;
+  font-family: var(--heading);
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 0.6rem;
+}
+
+.avail-roles-block { position: relative; margin-bottom: 1.6rem; }
+
+.avail-roles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.avail-role {
+  font-size: 0.82rem;
+  color: #A7F3D0;
+  background: rgba(52,211,153,0.1);
+  border: 1px solid rgba(52,211,153,0.28);
+  border-radius: 8px;
+  padding: 6px 13px;
+}
+
+.avail-meta {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding: 1.2rem 0;
+  margin-bottom: 1.4rem;
+  border-top: 1px solid rgba(255,255,255,0.07);
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+
+.avail-meta-item { display: flex; flex-direction: column; }
+
+.avail-meta-value {
+  font-size: 0.88rem;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.avail-actions {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+/* ─── CERTIFICATIONS ──────────────────────────────────────── */
+/* Fixed-width square tiles in a left-aligned grid — the badge-wall layout
+   corporate credential pages use. Fixed columns rather than 1fr so a lone
+   card stays a card instead of stretching into a banner. */
+.cert-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 272px);
+  justify-content: start;
+  gap: 1.5rem;
+}
+
+.cert-card {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  min-height: 272px;
+  background: var(--glass);
+  border: 1px solid;
+  border-radius: 16px;
+  padding: 1.5rem 1.2rem 1.2rem;
+  transition: background 0.3s, transform 0.3s, border-color 0.3s;
+}
+.cert-card:hover {
+  background: var(--glass-hover);
+  transform: translateY(-4px);
+}
+
+.cert-glow {
+  position: absolute;
+  top: -120px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 260px;
+  height: 260px;
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.cert-badge {
+  position: relative;
+  width: 92px;
+  height: 92px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+}
+
+.cert-badge-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 7px;
+}
+
+.cert-badge-emoji { font-size: 2.2rem; line-height: 1; }
+
+.cert-issuer {
+  position: relative;
+  font-family: var(--heading);
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.cert-name {
+  position: relative;
+  font-family: var(--heading);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--text);
+  margin: 0.35rem 0 0.3rem;
+}
+
+.cert-dates {
+  position: relative;
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  margin-bottom: 0.9rem;
+}
+
+.cert-skills {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.3rem;
+  margin-bottom: 1rem;
+}
+
+.cert-skill {
+  font-size: 0.66rem;
+  padding: 2px 9px;
+  border: 1px solid;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.03);
+}
+
+.cert-skill-more {
+  border-color: rgba(255,255,255,0.12);
+  color: var(--text-dim);
+}
+
+.cert-footer {
+  position: relative;
+  margin-top: auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cert-verify {
+  display: block;
+  width: 100%;
+  font-size: 0.76rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid;
+  border-radius: 8px;
+  padding: 8px 10px;
+  transition: background 0.2s;
+}
+.cert-verify:hover { background: rgba(255,255,255,0.06); }
+
+.cert-credential {
+  display: block;
+  max-width: 100%;
+  font-size: 0.62rem;
+  letter-spacing: 0.5px;
+  color: var(--text-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.cert-credential code {
+  color: var(--text-dim);
+  background: none;
+  padding: 0;
+}
+
+/* Marks a Credly skill badge so it is not read as a full certification */
+.cert-kind {
+  position: relative;
+  display: inline-block;
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 2px 8px;
+  margin-bottom: 0.5rem;
+}
+
+@media (max-width: 640px) {
+  .avail-section { padding: 0 1.2rem 1.6rem; }
+  .avail-card { padding: 1.5rem; }
+  .avail-meta { gap: 1.2rem; }
+  .cert-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .avail-pulse { animation: none; }
+  .cert-card:hover { transform: none; }
+}

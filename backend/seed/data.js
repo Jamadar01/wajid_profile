@@ -22,6 +22,30 @@ const profileSeed = {
     github:   'https://github.com/Jamadar01',
     linkedin: 'https://www.linkedin.com/in/wajid-jamadar-2b880b20a/',
   },
+
+  /* Drives the open-to-work banner. `roles`, `types`, `locations` and
+     `startDate` are a starting point derived from the AI/Data direction —
+     edit them at /admin -> Profile so they match what you actually want.
+     Set open: false to hide the banner entirely. */
+  availability: {
+    open:        true,
+    status:      'Open to AI & Data roles',
+    closedLabel: 'Not currently looking',
+    headline:    'Open to AI and Data Engineering roles',
+    blurb:
+      'I build production AI systems — LLM integrations, retrieval and recommendation pipelines, and the real-time APIs around them. Looking for a team where that work is the core of the product, not a side experiment.',
+    roles: [
+      'AI / LLM Engineer',
+      'Data Engineer',
+      'Machine Learning Engineer',
+      'Full-Stack Engineer (AI products)',
+    ],
+    types:     ['Full-time'],
+    locations: ['Mumbai', 'Remote', 'Hybrid'],
+    startDate: '',
+    ctaLabel:  'Get in touch',
+    ctaUrl:    '#contact',
+  },
 };
 
 const aboutSeed = {
@@ -569,6 +593,32 @@ const skillsSeed = {
   ],
 };
 
+const certificationsSeed = [
+  {
+    name:   'Professional Data Engineer',
+    issuer: 'Google Cloud',
+    kind:   'certification',
+    /* Dates, credential ID and image all come from the public Open Badges
+       assertion behind the Credly badge (issuedOn 2025-12-21, expires
+       2027-12-21), so they match the credential exactly. */
+    issued:  'Dec 2025',
+    expires: 'Dec 2027',
+    credentialId: 'eb29f6357d36447dbda553697563dc86',
+    verifyUrl:    'https://www.credly.com/badges/b9ab15cd-c222-4580-b740-85d3375d1fb1',
+    badgeImage:   'https://images.credly.com/size/340x340/images/2d613ff8-8879-430b-b2d8-925fa29785e8/image.png',
+    emoji:  '☁️',
+    color:  '#4285F4',
+    glow:   'rgba(66,133,244,0.45)',
+    skills: [
+      'BigQuery', 'Dataflow', 'Pub/Sub', 'Vertex AI',
+      'Data modelling', 'Pipeline design', 'ML deployment',
+    ],
+    desc:
+      'Google Cloud’s professional-level certification for designing and operating data processing systems — batch and streaming pipelines, warehousing, and putting machine learning models into production.',
+    order: 0,
+  },
+];
+
 const hackathonsSeed = [
   {
     rank: 'Top 10',
@@ -615,6 +665,7 @@ module.exports = {
   companyProjectsSeed,
   personalProjectsSeed,
   skillsSeed,
+  certificationsSeed,
   hackathonsSeed,
   recommendationsSeed,
 };

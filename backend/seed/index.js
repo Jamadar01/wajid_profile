@@ -6,6 +6,7 @@ const Experience     = require('../src/models/Experience');
 const Project        = require('../src/models/Project');
 const Skill          = require('../src/models/Skill');
 const Hackathon      = require('../src/models/Hackathon');
+const Certification  = require('../src/models/Certification');
 const Recommendation = require('../src/models/Recommendation');
 const {
   profileSeed,
@@ -14,6 +15,7 @@ const {
   companyProjectsSeed,
   personalProjectsSeed,
   skillsSeed,
+  certificationsSeed,
   hackathonsSeed,
   recommendationsSeed,
 } = require('./data');
@@ -47,6 +49,10 @@ async function seed() {
 
   await Skill.findByIdAndUpdate('singleton', skillsSeed, { upsert: true });
   console.log('Seeded: Skills');
+
+  await Certification.deleteMany({});
+  await Certification.insertMany(certificationsSeed);
+  console.log('Seeded: Certifications');
 
   await Hackathon.deleteMany({});
   await Hackathon.insertMany(hackathonsSeed);

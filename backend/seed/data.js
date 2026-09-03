@@ -331,11 +331,12 @@ const personalProjectsSeed = [
       { layer: 'Intelligence', tech: ['OpenAI GPT-4o-mini', 'pdfplumber'], note: 'Resume parsing and a skills/experience summary' },
       { layer: 'Vector Store', tech: ['Pinecone'], note: 'text-embedding-3-large, cosine, 3072 dimensions' },
       { layer: 'Storage',      tech: ['MongoDB'], note: 'Raw listings via pymongo' },
-      { layer: 'Scheduler',    tech: ['APScheduler'], note: 'Weekly cleanup plus a full pipeline re-run' },
+      { layer: 'Scheduler',    tech: ['APScheduler'], note: 'Clears MongoDB and Pinecone, re-scrapes, then rebuilds the index' },
     ],
     highlights: [
       'Semantic matching instead of keyword search',
       'Fully automated weekly refresh — no manual trigger',
+      'Every pipeline stage has its own endpoint, so any step can be re-run alone',
       'Layered services: scraping, resume, storage and vectors stay separable',
     ],
     repoUrl: 'https://github.com/Jamadar01/JobGenie',

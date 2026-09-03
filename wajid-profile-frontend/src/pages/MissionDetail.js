@@ -4,6 +4,7 @@ import { api } from '../api';
 import StarField from '../components/StarField';
 import NebulaOrbs from '../components/NebulaOrbs';
 import ArchitectureDiagram from '../components/ArchitectureDiagram';
+import ThemeToggle from '../components/ThemeToggle';
 
 const FALLBACK_COLOR = '#8B5CF6';
 
@@ -139,6 +140,7 @@ export default function MissionDetail() {
         <Link to="/" className="nav-logo">Wajid Jamadar</Link>
         <div className="nav-links-bar">
           <Link to="/#experience" className="nav-link">← All Missions</Link>
+          <ThemeToggle />
         </div>
       </nav>
 

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import ThemeToggle from './ThemeToggle';
 
 const LINKS = [
   { label: 'About',      href: '#about' },
@@ -26,6 +27,7 @@ export default function SpaceNav() {
         {LINKS.map(({ label, href }) => (
           <a key={label} href={href} className="nav-link">{label}</a>
         ))}
+        <ThemeToggle />
         <a
           href="https://drive.google.com/file/d/1QHDfvKdBQcL-6MtakP_QCbdcI1RIminJ/view?usp=drive_link"
           target="_blank"

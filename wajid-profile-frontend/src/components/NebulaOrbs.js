@@ -10,7 +10,7 @@ const orbs = [
 
 export default function NebulaOrbs() {
   return (
-    <div style={{ position: 'fixed', inset: 0, zIndex: 0, pointerEvents: 'none', overflow: 'hidden' }}>
+    <div className="nebula-orbs" style={{ position: 'fixed', inset: 0, zIndex: 0, pointerEvents: 'none', overflow: 'hidden' }}>
       {orbs.map((o, i) => (
         <div
           key={i}

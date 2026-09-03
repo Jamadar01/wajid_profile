@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import './App.css';
 
 import { AuthProvider }    from './context/AuthContext';
+import { ThemeProvider }   from './context/ThemeContext';
 import ProtectedRoute      from './components/ProtectedRoute';
 import AdminLogin          from './pages/admin/AdminLogin';
 import AdminDashboard      from './pages/admin/AdminDashboard';
@@ -104,6 +105,7 @@ function Portfolio() {
 
 export default function App() {
   return (
+    <ThemeProvider>
     <AuthProvider>
       <BrowserRouter>
         <HashScroll />
@@ -116,5 +118,6 @@ export default function App() {
         </Routes>
       </BrowserRouter>
     </AuthProvider>
+    </ThemeProvider>
   );
 }

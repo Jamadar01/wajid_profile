@@ -97,7 +97,7 @@ export default function About() {
               <p className="edu-label">Extra-Curricular</p>
               {extras.map((e, i) => (
                 <p key={i} className="about-text" style={{ marginBottom: '0.5rem' }}>
-                  <strong style={{ color: '#a78bfa' }}>{e.role}</strong> — {e.org}: {e.desc}
+                  <strong className="extra-role">{e.role}</strong> — {e.org}: {e.desc}
                 </p>
               ))}
             </div>

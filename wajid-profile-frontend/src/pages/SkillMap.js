@@ -1,8 +1,11 @@
 import React, { useState, useMemo } from 'react';
 import { useFetch } from '../hooks/useFetch';
+import { useTheme } from '../context/ThemeContext';
 import SectionStatus from '../components/SectionStatus';
 
 export default function SkillMap() {
+  const { theme } = useTheme();
+  const isLight = theme === 'light';
   const { data, loading, error } = useFetch('/api/skills/constellations');
   const CONSTELLATIONS = useMemo(() => data?.constellations || [], [data]);
 
@@ -28,8 +31,8 @@ export default function SkillMap() {
         Every star is a real skill I use. Lines group related skills into constellations.
       </p>
       <p className="about-text" style={{ marginBottom: '1.5rem', maxWidth: 560 }}>
-        <span style={{ color: '#A78BFA' }}>Hover</span> any star to see its name ·{' '}
-        <span style={{ color: '#38BDF8' }}>Click</span> a category below to spotlight that constellation.
+        <span className="hint-hover">Hover</span> any star to see its name ·{' '}
+        <span className="hint-click">Click</span> a category below to spotlight that constellation.
       </p>
       <SectionStatus loading={loading} error={error} empty={!CONSTELLATIONS.length} />
 
@@ -38,9 +41,14 @@ export default function SkillMap() {
           <button
             key={c.name}
             className={`legend-btn ${active === c.name ? 'legend-active' : ''}`}
+            /* the inactive state was a 60%-alpha accent, which disappears on a
+               pale ground — on light it keeps full alpha and a firmer border,
+               and the theme filter darkens it for contrast. */
             style={active === c.name
               ? { borderColor: c.color, color: c.color, background: `${c.color}18` }
-              : { borderColor: `${c.color}33`, color: c.color + '99' }
+              : isLight
+                ? { borderColor: `${c.color}66`, color: c.color, background: `${c.color}0D` }
+                : { borderColor: `${c.color}33`, color: c.color + '99' }
             }
             onClick={() => setActive(a => a === c.name ? null : c.name)}
           >
@@ -72,7 +80,7 @@ export default function SkillMap() {
               cx={(Math.sin(i * 137.5) * 0.5 + 0.5) * 100}
               cy={(Math.cos(i * 97.3) * 0.5 + 0.5) * 100}
               r={0.2}
-              fill="white"
+              className="starmap-dot"
               opacity={0.15 + (i % 5) * 0.05}
             />
           ))}

@@ -46,6 +46,9 @@
   --badge-text:   #C4B5FD;
   --space-glow:   none;
   --star-dot:     #FFFFFF;
+  --accent-soft:  #C4B5FD;
+  --danger:       #F87171;
+  --info:         #7DD3FC;
   --knob-bg:      linear-gradient(145deg, #C4B5FD, #7C3AED);
   --knob-shadow:  0 2px 6px rgba(0,0,0,0.45), 0 0 10px rgba(139,92,246,0.5);
   --star-a:       #A78BFA;
@@ -118,6 +121,9 @@
     radial-gradient(ellipse 65% 45% at 70% 72%, rgba(236,72,153,0.11) 0%, transparent 62%),
     radial-gradient(ellipse 55% 50% at 20% 88%, rgba(59,130,246,0.13) 0%, transparent 62%);
   --star-dot:     #7C3AED;
+  --accent-soft:  #5B21B6;
+  --danger:       #DC2626;
+  --info:         #0369A1;
   --knob-bg:      linear-gradient(145deg, #FEF3C7, #F59E0B);
   --knob-shadow:  0 2px 6px rgba(76,29,149,0.25), 0 0 10px rgba(245,158,11,0.45);
   --star-a:       #7C3AED;

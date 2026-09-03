@@ -4,8 +4,8 @@ import { useAuth } from '../../../context/AuthContext';
 import { SaveBtn, StatusMsg } from './shared';
 
 const inputStyle = {
-  width: '100%', background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)',
-  borderRadius: 8, padding: '9px 12px', color: '#e5e7eb', fontSize: 14,
+  width: '100%', background: 'var(--surface-3)', border: '1px solid var(--border-mid)',
+  borderRadius: 8, padding: '9px 12px', color: 'var(--text)', fontSize: 14,
   outline: 'none', boxSizing: 'border-box', fontFamily: 'monospace',
 };
 
@@ -42,14 +42,14 @@ export default function SkillsEditor() {
 
   return (
     <div>
-      <h2 style={{ color: '#a78bfa', marginBottom: 8 }}>Skills</h2>
-      <p style={{ color: '#6b7280', fontSize: 13, marginBottom: 24 }}>
+      <h2 style={{ color: 'var(--purple)', marginBottom: 8 }}>Skills</h2>
+      <p style={{ color: 'var(--text-mid)', fontSize: 13, marginBottom: 24 }}>
         Edit skill groups. Constellation positions are managed via the seed script.
       </p>
 
       {groups.map((g, i) => (
         <div key={i} style={{
-          background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)',
+          background: 'var(--surface-1)', border: '1px solid var(--border)',
           borderRadius: 10, padding: '14px 16px', marginBottom: 12,
         }}>
           <div style={{ display: 'flex', gap: 12, alignItems: 'center', marginBottom: 8 }}>
@@ -61,7 +61,7 @@ export default function SkillsEditor() {
               onChange={e => updateGroup(i, 'skills', e.target.value)} />
             <button onClick={() => removeGroup(i)} style={{
               background: 'rgba(248,113,113,0.1)', border: '1px solid rgba(248,113,113,0.3)',
-              borderRadius: 6, padding: '6px 12px', color: '#f87171', cursor: 'pointer',
+              borderRadius: 6, padding: '6px 12px', color: 'var(--danger)', cursor: 'pointer',
               fontSize: 13, flexShrink: 0,
             }}>✕</button>
           </div>
@@ -70,7 +70,7 @@ export default function SkillsEditor() {
 
       <button onClick={addGroup} style={{
         background: 'rgba(52,211,153,0.1)', border: '1px solid rgba(52,211,153,0.3)',
-        borderRadius: 8, padding: '8px 20px', color: '#34d399', cursor: 'pointer',
+        borderRadius: 8, padding: '8px 20px', color: 'var(--ok)', cursor: 'pointer',
         fontSize: 14, marginBottom: 20, display: 'block',
       }}>+ Add Group</button>
 

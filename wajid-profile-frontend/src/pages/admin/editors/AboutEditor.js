@@ -56,23 +56,23 @@ export default function AboutEditor() {
 
   return (
     <div>
-      <h2 style={{ color: '#a78bfa', marginBottom: 24 }}>About</h2>
+      <h2 style={{ color: 'var(--purple)', marginBottom: 24 }}>About</h2>
 
-      <h3 style={{ color: '#9ca3af', fontSize: 12, letterSpacing: 1, marginBottom: 12 }}>STATUS CHIPS — format: LABEL|VALUE|#COLOR (one per line)</h3>
+      <h3 style={{ color: 'var(--text-mid)', fontSize: 12, letterSpacing: 1, marginBottom: 12 }}>STATUS CHIPS — format: LABEL|VALUE|#COLOR (one per line)</h3>
       <Textarea label="" value={form.chips} onChange={v => set('chips', v)} rows={4} />
 
       <Textarea label="Bio paragraphs (blank line between each)" value={form.bio} onChange={v => set('bio', v)} rows={6} />
 
       <Field label="Hobbies (comma-separated)" value={form.hobbies} onChange={v => set('hobbies', v)} />
 
-      <h3 style={{ color: '#9ca3af', fontSize: 12, letterSpacing: 1, marginBottom: 12, marginTop: 8 }}>EDUCATION</h3>
+      <h3 style={{ color: 'var(--text-mid)', fontSize: 12, letterSpacing: 1, marginBottom: 12, marginTop: 8 }}>EDUCATION</h3>
       <Field label="School" value={form.school} onChange={v => set('school', v)} />
       <Field label="Degree" value={form.degree} onChange={v => set('degree', v)} />
       <Field label="Period" value={form.period} onChange={v => set('period', v)} />
       <Field label="CGPA" value={form.cgpa} onChange={v => set('cgpa', v)} />
       <Field label="Location" value={form.location} onChange={v => set('location', v)} />
 
-      <h3 style={{ color: '#9ca3af', fontSize: 12, letterSpacing: 1, marginBottom: 12, marginTop: 8 }}>EXTRA-CURRICULARS — format: ROLE|ORG|DESC (one per line)</h3>
+      <h3 style={{ color: 'var(--text-mid)', fontSize: 12, letterSpacing: 1, marginBottom: 12, marginTop: 8 }}>EXTRA-CURRICULARS — format: ROLE|ORG|DESC (one per line)</h3>
       <Textarea label="" value={form.extras} onChange={v => set('extras', v)} rows={4} />
 
       <SaveBtn onClick={save} />

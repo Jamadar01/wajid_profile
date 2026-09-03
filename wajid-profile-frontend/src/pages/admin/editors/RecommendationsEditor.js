@@ -39,12 +39,12 @@ export default function RecommendationsEditor() {
 
   return (
     <div>
-      <h2 style={{ color: '#a78bfa', marginBottom: 24 }}>Recommendations</h2>
+      <h2 style={{ color: 'var(--purple)', marginBottom: 24 }}>Recommendations</h2>
       <AddBtn onClick={startAdd} />
 
       {form && (
         <FormCard onCancel={cancel}>
-          <h3 style={{ color: '#c4b5fd', marginBottom: 16, fontSize: 15 }}>
+          <h3 style={{ color: 'var(--accent-soft)', marginBottom: 16, fontSize: 15 }}>
             {editId ? 'Edit Recommendation' : 'New Recommendation'}
           </h3>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 16px' }}>
@@ -63,9 +63,9 @@ export default function RecommendationsEditor() {
 
       {items.sort((a, b) => a.order - b.order).map(item => (
         <ItemCard key={item._id} onEdit={() => startEdit(item)} onDelete={() => del(item._id)}>
-          <strong style={{ color: '#c4b5fd' }}>{item.name}</strong>
-          <span style={{ color: '#6b7280', fontSize: 13 }}> — {item.role}</span>
-          <br /><span style={{ color: '#9ca3af', fontSize: 13, fontStyle: 'italic' }}>"{item.quote?.slice(0, 80)}…"</span>
+          <strong style={{ color: 'var(--accent-soft)' }}>{item.name}</strong>
+          <span style={{ color: 'var(--text-mid)', fontSize: 13 }}> — {item.role}</span>
+          <br /><span style={{ color: 'var(--text-mid)', fontSize: 13, fontStyle: 'italic' }}>"{item.quote?.slice(0, 80)}…"</span>
         </ItemCard>
       ))}
       {!form && <StatusMsg msg={status} />}

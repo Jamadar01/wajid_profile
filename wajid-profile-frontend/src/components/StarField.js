@@ -42,7 +42,21 @@ export default function StarField() {
       });
       raf = requestAnimationFrame(draw);
     };
-    raf = requestAnimationFrame(draw);
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      // Draw one static frame instead of animating the twinkle loop
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      stars.forEach(s => {
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.globalAlpha = Math.max(0.2, Math.min(1, s.alpha));
+        ctx.fillStyle = s.color;
+        ctx.fill();
+        ctx.globalAlpha = 1;
+      });
+    } else {
+      raf = requestAnimationFrame(draw);
+    }
 
     return () => {
       cancelAnimationFrame(raf);

@@ -17,6 +17,19 @@ export function Field({ label, value, onChange, type = 'text' }) {
   );
 }
 
+export function Select({ label, value, onChange, options }) {
+  return (
+    <div>
+      <label style={labelStyle}>{label.toUpperCase()}</label>
+      <select style={inputStyle} value={value} onChange={e => onChange(e.target.value)}>
+        {options.map(o => (
+          <option key={o.value} value={o.value} style={{ background: '#1e1b31' }}>{o.label}</option>
+        ))}
+      </select>
+    </div>
+  );
+}
+
 export function Textarea({ label, value, onChange, rows = 3 }) {
   return (
     <div>

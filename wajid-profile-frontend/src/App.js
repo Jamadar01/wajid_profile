@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import './App.css';
 
 import { AuthProvider }    from './context/AuthContext';
@@ -14,13 +14,39 @@ import Hero            from './pages/Hero';
 import About           from './pages/About';
 import Experience      from './pages/Experience';
 import Projects        from './pages/Projects';
+import MissionDetail   from './pages/MissionDetail';
 import SkillMap        from './pages/SkillMap';
 import Hackathons      from './pages/Hackathons';
+import Contact         from './pages/Contact';
+import GitHubActivity  from './pages/GitHubActivity';
+import NotFound        from './pages/NotFound';
 //import Recommendations from './components/Recommendations';
+
+/* Coming back from /mission/:slug to /#experience changes the route, and the
+   router does not scroll to a hash on its own — so do it here. Waits a frame
+   for the target section to mount before scrolling. */
+function HashScroll() {
+  const { pathname, hash } = useLocation();
+
+  useEffect(() => {
+    if (!hash) {
+      if (pathname === '/') window.scrollTo(0, 0);
+      return;
+    }
+    const raf = requestAnimationFrame(() => {
+      const el = document.querySelector(hash);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+    return () => cancelAnimationFrame(raf);
+  }, [pathname, hash]);
+
+  return null;
+}
 
 function Portfolio() {
   /* 2-D mouse parallax — CSS custom properties, no re-renders */
   useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     let mx = 0, my = 0, cx = 0, cy = 0, raf;
     const onMove = (e) => {
       mx = (e.clientX / window.innerWidth  - 0.5) * 2;
@@ -53,6 +79,7 @@ function Portfolio() {
         <Projects />
         <SkillMap />
         <Hackathons />
+        <GitHubActivity />
         {/* <section className="space-section" id="testimonials">
           <p className="section-label">What People Say</p>
           <h2 className="section-heading">Signal Transmissions</h2>
@@ -62,8 +89,9 @@ function Portfolio() {
           </p>
           <Recommendations />
         </section> */}
+        <Contact />
         <footer className="space-footer">
-          Built with ♥ by <a href="https://github.com/Jamadar01" target="_blank" rel="noreferrer">Wajid Jamadar</a> · 2025
+          Built with ♥ by <a href="https://github.com/Jamadar01" target="_blank" rel="noreferrer">Wajid Jamadar</a> · {new Date().getFullYear()}
         </footer>
       </main>
     </>
@@ -74,10 +102,13 @@ export default function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
+        <HashScroll />
         <Routes>
-          <Route path="/"             element={<Portfolio />} />
-          <Route path="/admin/login"  element={<AdminLogin />} />
-          <Route path="/admin"        element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+          <Route path="/"                 element={<Portfolio />} />
+          <Route path="/mission/:slug"    element={<MissionDetail />} />
+          <Route path="/admin/login"      element={<AdminLogin />} />
+          <Route path="/admin"            element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+          <Route path="*"                 element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

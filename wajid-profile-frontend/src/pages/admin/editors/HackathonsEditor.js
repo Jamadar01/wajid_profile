@@ -54,12 +54,12 @@ export default function HackathonsEditor() {
 
   return (
     <div>
-      <h2 style={{ color: '#a78bfa', marginBottom: 24 }}>Hackathons</h2>
+      <h2 style={{ color: 'var(--purple)', marginBottom: 24 }}>Hackathons</h2>
       <AddBtn onClick={startAdd} />
 
       {form && (
         <FormCard onCancel={cancel}>
-          <h3 style={{ color: '#c4b5fd', marginBottom: 16, fontSize: 15 }}>
+          <h3 style={{ color: 'var(--accent-soft)', marginBottom: 16, fontSize: 15 }}>
             {editId ? 'Edit Hackathon' : 'New Hackathon'}
           </h3>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 16px' }}>
@@ -82,9 +82,9 @@ export default function HackathonsEditor() {
       {items.sort((a, b) => a.order - b.order).map(item => (
         <ItemCard key={item._id} onEdit={() => startEdit(item)} onDelete={() => del(item._id)}>
           <span style={{ fontSize: 18, marginRight: 8 }}>{item.emoji}</span>
-          <strong style={{ color: '#c4b5fd' }}>{item.name}</strong>
-          <span style={{ color: '#fcd34d', marginLeft: 8 }}>[{item.rank}]</span>
-          <br /><span style={{ color: '#6b7280', fontSize: 13 }}>{item.org}</span>
+          <strong style={{ color: 'var(--accent-soft)' }}>{item.name}</strong>
+          <span style={{ color: 'var(--gold)', marginLeft: 8 }}>[{item.rank}]</span>
+          <br /><span style={{ color: 'var(--text-mid)', fontSize: 13 }}>{item.org}</span>
         </ItemCard>
       ))}
       {!form && <StatusMsg msg={status} />}

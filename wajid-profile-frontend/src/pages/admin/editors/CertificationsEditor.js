@@ -58,9 +58,9 @@ export default function CertificationsEditor() {
 
   return (
     <div>
-      <h2 style={{ color: '#a78bfa', marginBottom: 8 }}>Certifications</h2>
-      <p style={{ color: '#6b7280', fontSize: 13, marginBottom: 20 }}>
-        Shown on the homepage under <strong style={{ color: '#9ca3af' }}>Certifications</strong>.
+      <h2 style={{ color: 'var(--purple)', marginBottom: 8 }}>Certifications</h2>
+      <p style={{ color: 'var(--text-mid)', fontSize: 13, marginBottom: 20 }}>
+        Shown on the homepage under <strong style={{ color: 'var(--text)' }}>Certifications</strong>.
         The whole section hides itself when there are none. The Verify button and the credential
         ID each appear only when you fill them in.
       </p>
@@ -68,7 +68,7 @@ export default function CertificationsEditor() {
       {!!missingVerify && (
         <div style={{
           background: 'rgba(56,189,248,0.07)', border: '1px solid rgba(56,189,248,0.25)',
-          borderRadius: 8, padding: '10px 14px', marginBottom: 20, fontSize: 13, color: '#7dd3fc',
+          borderRadius: 8, padding: '10px 14px', marginBottom: 20, fontSize: 13, color: 'var(--info)',
         }}>
           {missingVerify} {missingVerify === 1 ? 'certification has' : 'certifications have'} no
           verify URL yet — hiring managers can&apos;t confirm it without one. For Google Cloud, grab
@@ -80,7 +80,7 @@ export default function CertificationsEditor() {
 
       {form && (
         <FormCard onCancel={cancel}>
-          <h3 style={{ color: '#c4b5fd', marginBottom: 16, fontSize: 15 }}>
+          <h3 style={{ color: 'var(--accent-soft)', marginBottom: 16, fontSize: 15 }}>
             {editId ? 'Edit Certification' : 'New Certification'}
           </h3>
 
@@ -98,8 +98,8 @@ export default function CertificationsEditor() {
             <Field label="Glow (rgba)" value={form.glow} onChange={v => set('glow', v)} />
           </div>
 
-          <p style={{ color: '#4b5563', fontSize: 12, marginTop: -8, marginBottom: 16 }}>
-            <strong style={{ color: '#7dd3fc' }}>Credly:</strong> paste your badge page
+          <p style={{ color: 'var(--text-dim)', fontSize: 12, marginTop: -8, marginBottom: 16 }}>
+            <strong style={{ color: 'var(--info)' }}>Credly:</strong> paste your badge page
             (<code>credly.com/badges/&lt;id&gt;</code>) as the Verify URL — the button then reads
             &ldquo;View on Credly&rdquo;. For the artwork, open that page, right-click the badge
             image, copy its address, and paste it as Badge Image. The badge must be set to
@@ -118,20 +118,20 @@ export default function CertificationsEditor() {
       {items.slice().sort((a, b) => a.order - b.order).map(item => (
         <ItemCard key={item._id} onEdit={() => startEdit(item)} onDelete={() => del(item._id)}>
           <span style={{ fontSize: 18, marginRight: 8 }}>{item.emoji}</span>
-          <strong style={{ color: '#c4b5fd' }}>{item.name}</strong>
+          <strong style={{ color: 'var(--accent-soft)' }}>{item.name}</strong>
           {!item.verifyUrl && (
             <span style={{
-              marginLeft: 8, fontSize: 10, letterSpacing: 1.5, color: '#7dd3fc',
+              marginLeft: 8, fontSize: 10, letterSpacing: 1.5, color: 'var(--info)',
               border: '1px solid rgba(56,189,248,0.3)', borderRadius: 20, padding: '2px 8px',
             }}>NO VERIFY LINK</span>
           )}
           <br />
-          <span style={{ color: '#6b7280', fontSize: 13 }}>
+          <span style={{ color: 'var(--text-mid)', fontSize: 13 }}>
             {item.issuer}{item.issued ? ` · ${item.issued}` : ''}
             {item.expires ? ` → ${item.expires}` : ''}
           </span>
           <br />
-          <span style={{ color: '#4b5563', fontSize: 12 }}>
+          <span style={{ color: 'var(--text-dim)', fontSize: 12 }}>
             {(item.skills || []).length} skills
             {item.credentialId ? ` · ID ${item.credentialId}` : ' · no credential ID'}
           </span>

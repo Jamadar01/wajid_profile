@@ -86,8 +86,8 @@ export default function ExperienceEditor() {
 
   return (
     <div>
-      <h2 style={{ color: '#a78bfa', marginBottom: 8 }}>Experience</h2>
-      <p style={{ color: '#6b7280', fontSize: 13, marginBottom: 20 }}>
+      <h2 style={{ color: 'var(--purple)', marginBottom: 8 }}>Experience</h2>
+      <p style={{ color: 'var(--text-mid)', fontSize: 13, marginBottom: 20 }}>
         Each entry is a mission with its own page at <code>/mission/&lt;slug&gt;</code>.
         Summary, skill groups and impact appear there only — the homepage card ignores them.
       </p>
@@ -95,7 +95,7 @@ export default function ExperienceEditor() {
 
       {form && (
         <FormCard onCancel={cancel}>
-          <h3 style={{ color: '#c4b5fd', marginBottom: 16, fontSize: 15 }}>
+          <h3 style={{ color: 'var(--accent-soft)', marginBottom: 16, fontSize: 15 }}>
             {editId ? 'Edit Entry' : 'New Entry'}
           </h3>
 
@@ -113,8 +113,8 @@ export default function ExperienceEditor() {
           <Field label="Tech Stack (shown on the homepage card)" value={form.techStack} onChange={v => set('techStack', v)} />
           <Textarea label="Responsibilities (one per line)" value={form.responsibilities} onChange={v => set('responsibilities', v)} rows={4} />
 
-          <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', margin: '8px 0 18px' }} />
-          <p style={{ color: '#a78bfa', fontSize: 12, letterSpacing: 1, marginBottom: 14 }}>
+          <div style={{ borderTop: '1px solid var(--border)', margin: '8px 0 18px' }} />
+          <p style={{ color: 'var(--purple)', fontSize: 12, letterSpacing: 1, marginBottom: 14 }}>
             MISSION PAGE ONLY
           </p>
 
@@ -135,11 +135,11 @@ export default function ExperienceEditor() {
 
       {items.slice().sort((a, b) => a.order - b.order).map(item => (
         <ItemCard key={item._id} onEdit={() => startEdit(item)} onDelete={() => del(item._id)}>
-          <strong style={{ color: '#c4b5fd' }}>{item.company}</strong> — {item.role}
-          <br /><span style={{ color: '#6b7280', fontSize: 13 }}>
+          <strong style={{ color: 'var(--accent-soft)' }}>{item.company}</strong> — {item.role}
+          <br /><span style={{ color: 'var(--text-mid)', fontSize: 13 }}>
             {item.duration} · {item.location}
           </span>
-          <br /><span style={{ color: '#4b5563', fontSize: 12 }}>
+          <br /><span style={{ color: 'var(--text-dim)', fontSize: 12 }}>
             /mission/{item.slug || item._id}
             {' · '}{(item.skillGroups || []).length} skill groups
           </span>

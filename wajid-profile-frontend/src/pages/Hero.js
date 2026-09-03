@@ -92,7 +92,7 @@ export default function Hero() {
           <div className="hero-coords">
             <span>19.0760° N</span>
             <span>72.8777° E</span>
-            <span style={{ color: '#34d399' }}>● Mumbai</span>
+            <span className="hero-coord-live">● Mumbai</span>
           </div>
         </div>
 

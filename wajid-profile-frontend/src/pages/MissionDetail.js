@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useLocation } from 'react-router-dom';
 import { api } from '../api';
 import StarField from '../components/StarField';
 import NebulaOrbs from '../components/NebulaOrbs';
 import ArchitectureDiagram from '../components/ArchitectureDiagram';
+import ThemeToggle from '../components/ThemeToggle';
 
 const FALLBACK_COLOR = '#8B5CF6';
 
@@ -31,14 +32,14 @@ function CaseStudy({ project, color }) {
   );
 }
 
-function ProjectBlock({ project, index, missionColor }) {
+function ProjectBlock({ project, index, missionColor, flashed }) {
   const color = tint(project, missionColor);
 
   return (
     <article
-      className="mission-project"
+      className={`mission-project ${flashed ? 'mission-project-flash' : ''}`}
       id={project.slug || project._id}
-      style={{ borderColor: `${color}26` }}
+      style={{ borderColor: flashed ? `${color}88` : `${color}26` }}
     >
       <div className="mission-project-head">
         <span className="mission-project-emoji" style={{ background: `${color}14`, borderColor: `${color}33` }}>
@@ -109,11 +110,70 @@ function ProjectBlock({ project, index, missionColor }) {
 
 export default function MissionDetail() {
   const { slug } = useParams();
+  const { hash } = useLocation();
   const [data, setData]       = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError]     = useState(null);
+  /* the project a deep link pointed at, ringed briefly so arriving
+     mid-page does not feel like a mis-scroll */
+  const [flash, setFlash]     = useState(null);
 
-  useEffect(() => { window.scrollTo(0, 0); }, [slug]);
+  /* Only jump to the top when there is no target — otherwise this would
+     fight the anchor scroll below. */
+  useEffect(() => {
+    if (!hash) window.scrollTo(0, 0);
+  }, [slug, hash]);
+
+  /* Anchor scroll for a deep link like /mission/x#project-slug.
+   *
+   * Deliberately a bounded poll rather than a one-shot effect. Three things
+   * make a single attempt unreliable here, and the poll absorbs all of them:
+   *   - the project blocks appear a commit later than `data`, because setData
+   *     lands in .then and setLoading in .finally — separate microtasks;
+   *   - a 'smooth' scroll over this distance gets cancelled part-way as the
+   *     page settles, so we jump instantly and re-check;
+   *   - layout still shifts afterwards while fonts and images load.
+   * It re-corrects until the target is actually under the nav, then stops.
+   *
+   * getElementById rather than querySelector: a slug can start with a digit
+   * ("43appmart-…"), which is not a valid CSS selector. */
+  useEffect(() => {
+    if (!hash) return undefined;
+    const id = hash.slice(1);
+    const NAV_OFFSET = 76;          // fixed nav is 60px, plus breathing room
+    const MAX_TRIES  = 14;          // ~1.7s at 120ms
+
+    let cancelled = false;
+    let ringed = false;
+    let tries = 0;
+
+    const attempt = () => {
+      if (cancelled) return;
+      const el = document.getElementById(id);
+
+      if (el) {
+        /* ring it the moment it exists, not once the scroll settles — the
+           two are independent, and tying them together meant a late layout
+           shift could swallow the highlight entirely */
+        if (!ringed) { setFlash(id); ringed = true; }
+
+        const offset = el.getBoundingClientRect().top - NAV_OFFSET;
+        if (Math.abs(offset) <= 4) return;   // on target, stop nudging
+        window.scrollTo({ top: window.scrollY + offset, behavior: 'instant' });
+      }
+
+      if (++tries <= MAX_TRIES) setTimeout(attempt, 120);
+    };
+
+    attempt();
+    return () => { cancelled = true; };
+  }, [slug, hash]);
+
+  useEffect(() => {
+    if (!flash) return undefined;
+    const t = setTimeout(() => setFlash(null), 2400);
+    return () => clearTimeout(t);
+  }, [flash]);
 
   useEffect(() => {
     let cancelled = false;
@@ -139,6 +199,7 @@ export default function MissionDetail() {
         <Link to="/" className="nav-logo">Wajid Jamadar</Link>
         <div className="nav-links-bar">
           <Link to="/#experience" className="nav-link">← All Missions</Link>
+          <ThemeToggle />
         </div>
       </nav>
 
@@ -257,7 +318,13 @@ export default function MissionDetail() {
                 {projects.length ? (
                   <div className="mission-project-list">
                     {projects.map((p, i) => (
-                      <ProjectBlock key={p._id} project={p} index={i} missionColor={color} />
+                      <ProjectBlock
+                        key={p._id}
+                        project={p}
+                        index={i}
+                        missionColor={color}
+                        flashed={flash === (p.slug || p._id)}
+                      />
                     ))}
                   </div>
                 ) : (

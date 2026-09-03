@@ -42,6 +42,29 @@
 
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
+    <!-- Theme, resolved before first paint so the page never flashes the
+         wrong palette. Stored choice wins; otherwise follow the OS. React
+         reads this attribute back in ThemeContext rather than recomputing. -->
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem('theme');
+          var theme =
+            stored === 'light' || stored === 'dark'
+              ? stored
+              : (window.matchMedia &&
+                 window.matchMedia('(prefers-color-scheme: light)').matches
+                  ? 'light'
+                  : 'dark');
+          document.documentElement.setAttribute('data-theme', theme);
+          var meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', theme === 'light' ? '#F7F8FC' : '#060612');
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      })();
+    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>

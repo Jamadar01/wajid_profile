@@ -76,13 +76,13 @@ export default function ProfileEditor() {
     setTimeout(() => setStatus(''), 3000);
   };
 
-  if (!form) return <p style={{ color: '#9ca3af' }}>Loading…</p>;
+  if (!form) return <p style={{ color: 'var(--text-mid)' }}>Loading…</p>;
 
-  const sectionHeading = { color: '#a78bfa', marginBottom: 12, marginTop: 28, fontSize: 13, letterSpacing: 1 };
+  const sectionHeading = { color: 'var(--purple)', marginBottom: 12, marginTop: 28, fontSize: 13, letterSpacing: 1 };
 
   return (
     <div>
-      <h2 style={{ color: '#a78bfa', marginBottom: 24 }}>Profile</h2>
+      <h2 style={{ color: 'var(--purple)', marginBottom: 24 }}>Profile</h2>
       <Field label="Name" value={form.name} onChange={v => set('name', v)} />
       <Field label="Greeting" value={form.greeting} onChange={v => set('greeting', v)} />
       <Textarea label="Typed Strings (one per line)" value={form.typedStrings} onChange={v => set('typedStrings', v)} rows={4} />
@@ -90,21 +90,21 @@ export default function ProfileEditor() {
       <Field label="Resume Link" value={form.resumeLink} onChange={v => set('resumeLink', v)} />
       <Field label="Profile Image Path" value={form.profileImage} onChange={v => set('profileImage', v)} />
 
-      <h3 style={{ ...sectionHeading, color: '#9ca3af' }}>SOCIAL LINKS</h3>
+      <h3 style={{ ...sectionHeading, color: 'var(--text-mid)' }}>SOCIAL LINKS</h3>
       <Field label="Email" value={form.email} onChange={v => set('email', v)} />
       <Field label="GitHub URL" value={form.github} onChange={v => set('github', v)} />
       <Field label="LinkedIn URL" value={form.linkedin} onChange={v => set('linkedin', v)} />
 
       <h3 style={sectionHeading}>OPEN TO WORK BANNER</h3>
-      <p style={{ color: '#6b7280', fontSize: 13, marginBottom: 16 }}>
+      <p style={{ color: 'var(--text-mid)', fontSize: 13, marginBottom: 16 }}>
         Drives the banner under the hero and the status pill inside it. Untick{' '}
-        <strong style={{ color: '#9ca3af' }}>Open to work</strong> to hide the banner completely —
+        <strong style={{ color: 'var(--text)' }}>Open to work</strong> to hide the banner completely —
         the pill then shows the closed label instead.
       </p>
 
       <label style={{
         display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20,
-        color: form.availOpen ? '#34d399' : '#9ca3af', fontSize: 13, letterSpacing: 1,
+        color: form.availOpen ? 'var(--ok)' : 'var(--text-mid)', fontSize: 13, letterSpacing: 1,
       }}>
         <input
           type="checkbox"

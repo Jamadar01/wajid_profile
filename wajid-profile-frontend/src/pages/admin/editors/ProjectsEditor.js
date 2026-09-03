@@ -126,10 +126,10 @@ export default function ProjectsEditor() {
 
   return (
     <div>
-      <h2 style={{ color: '#a78bfa', marginBottom: 8 }}>Projects</h2>
-      <p style={{ color: '#6b7280', fontSize: 13, marginBottom: 20 }}>
-        <strong style={{ color: '#9ca3af' }}>Personal</strong> projects fill the planet system
-        on the homepage. <strong style={{ color: '#9ca3af' }}>Company</strong> projects appear on
+      <h2 style={{ color: 'var(--purple)', marginBottom: 8 }}>Projects</h2>
+      <p style={{ color: 'var(--text-mid)', fontSize: 13, marginBottom: 20 }}>
+        <strong style={{ color: 'var(--text)' }}>Personal</strong> projects fill the planet system
+        on the homepage. <strong style={{ color: 'var(--text)' }}>Company</strong> projects appear on
         their mission page — link each one to a mission below.
       </p>
 
@@ -140,9 +140,9 @@ export default function ProjectsEditor() {
           return (
             <button key={k.value} onClick={() => setTab(k.value)} style={{
               background: active ? 'rgba(167,139,250,0.15)' : 'transparent',
-              border: `1px solid ${active ? 'rgba(167,139,250,0.4)' : 'rgba(255,255,255,0.12)'}`,
+              border: `1px solid ${active ? 'rgba(167,139,250,0.4)' : 'var(--border-strong)'}`,
               borderRadius: 8, padding: '7px 16px', fontSize: 13, cursor: 'pointer',
-              color: active ? '#c4b5fd' : '#9ca3af',
+              color: active ? 'var(--accent-soft)' : 'var(--text-mid)',
             }}>
               {k.value === 'personal' ? 'Personal' : 'Company'} ({count})
             </button>
@@ -153,7 +153,7 @@ export default function ProjectsEditor() {
       {!!draftCount && (
         <div style={{
           background: 'rgba(251,191,36,0.08)', border: '1px solid rgba(251,191,36,0.25)',
-          borderRadius: 8, padding: '10px 14px', marginBottom: 20, fontSize: 13, color: '#fbbf24',
+          borderRadius: 8, padding: '10px 14px', marginBottom: 20, fontSize: 13, color: 'var(--warn)',
         }}>
           {draftCount} {draftCount === 1 ? 'project is' : 'projects are'} still marked DRAFT — the
           public page labels them as such. Fill in Problem / What I Built / Result and the
@@ -165,7 +165,7 @@ export default function ProjectsEditor() {
 
       {form && (
         <FormCard onCancel={cancel}>
-          <h3 style={{ color: '#c4b5fd', marginBottom: 16, fontSize: 15 }}>
+          <h3 style={{ color: 'var(--accent-soft)', marginBottom: 16, fontSize: 15 }}>
             {editId ? 'Edit Project' : 'New Project'}
           </h3>
 
@@ -210,7 +210,7 @@ export default function ProjectsEditor() {
             onChange={v => set('architecture', v)}
             rows={7}
           />
-          <p style={{ color: '#4b5563', fontSize: 12, marginTop: -10, marginBottom: 16 }}>
+          <p style={{ color: 'var(--text-dim)', fontSize: 12, marginTop: -10, marginBottom: 16 }}>
             Example: <code>API | Node.js, Express | Streams tokens back over SSE</code> — rendered
             top-to-bottom as a connected stack.
           </p>
@@ -221,13 +221,13 @@ export default function ProjectsEditor() {
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: 24, marginBottom: 16 }}>
-            <label style={{ display: 'flex', alignItems: 'center', gap: 10, color: '#9ca3af', fontSize: 12, letterSpacing: 1 }}>
+            <label style={{ display: 'flex', alignItems: 'center', gap: 10, color: 'var(--text-mid)', fontSize: 12, letterSpacing: 1 }}>
               RING
               <input type="checkbox" checked={Boolean(form.ring)}
                 onChange={e => set('ring', e.target.checked)}
                 style={{ width: 16, height: 16 }} />
             </label>
-            <label style={{ display: 'flex', alignItems: 'center', gap: 10, color: '#fbbf24', fontSize: 12, letterSpacing: 1 }}>
+            <label style={{ display: 'flex', alignItems: 'center', gap: 10, color: 'var(--warn)', fontSize: 12, letterSpacing: 1 }}>
               DRAFT — details still to be written
               <input type="checkbox" checked={Boolean(form.draft)}
                 onChange={e => set('draft', e.target.checked)}
@@ -247,22 +247,22 @@ export default function ProjectsEditor() {
         .map(item => (
           <ItemCard key={item._id} onEdit={() => startEdit(item)} onDelete={() => del(item._id)}>
             <span style={{ fontSize: 18, marginRight: 8 }}>{item.emoji}</span>
-            <strong style={{ color: '#c4b5fd' }}>{item.name}</strong>
+            <strong style={{ color: 'var(--accent-soft)' }}>{item.name}</strong>
             {item.draft && (
               <span style={{
-                marginLeft: 8, fontSize: 10, letterSpacing: 1.5, color: '#fbbf24',
+                marginLeft: 8, fontSize: 10, letterSpacing: 1.5, color: 'var(--warn)',
                 border: '1px solid rgba(251,191,36,0.3)', borderRadius: 20, padding: '2px 8px',
               }}>DRAFT</span>
             )}
             <br />
-            <span style={{ color: '#6b7280', fontSize: 13 }}>
+            <span style={{ color: 'var(--text-mid)', fontSize: 13 }}>
               {tab === 'personal'
                 ? [item.liveUrl && 'Live', item.repoUrl && 'Repo'].filter(Boolean).join(' + ') || 'no links'
                 : (missionName(item.experience) || item.company || 'no mission linked')}
               {' · '}{(item.tech || []).join(', ')}
             </span>
             <br />
-            <span style={{ color: '#4b5563', fontSize: 12 }}>
+            <span style={{ color: 'var(--text-dim)', fontSize: 12 }}>
               {(item.architecture || []).length} architecture layers
               {' · '}{(item.highlights || []).length} highlights
             </span>

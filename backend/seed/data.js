@@ -532,7 +532,7 @@ const skillsSeed = {
       name: 'Languages', color: '#A78BFA',
       stars: [
         { id: 'js',   label: 'JavaScript', x: 14, y: 20, r: 1.1 },
-        { id: 'py',   label: 'Python',     x: 23, y: 30, r: 1.0 },
+        { id: 'py',   label: 'Python',     x: 23, y: 30, r: 1.0, aliases: ['FastAPI'] },
         { id: 'cpp',  label: 'C++',        x: 9,  y: 39, r: 0.9 },
         { id: 'java', label: 'Java',       x: 19, y: 13, r: 0.9 },
         { id: 'c',    label: 'C',          x: 5,  y: 27, r: 0.8 },
@@ -542,7 +542,7 @@ const skillsSeed = {
     {
       name: 'Frontend', color: '#38BDF8',
       stars: [
-        { id: 'react',     label: 'React.js',  x: 68, y: 12, r: 1.1 },
+        { id: 'react',     label: 'React.js',  x: 68, y: 12, r: 1.1, aliases: ['React', 'React 18', 'React 19'] },
         { id: 'angular',   label: 'AngularJS', x: 80, y: 19, r: 0.9 },
         { id: 'html',      label: 'HTML5',     x: 74, y: 28, r: 0.9 },
         { id: 'css3',      label: 'CSS3',      x: 85, y: 24, r: 0.8 },
@@ -553,7 +553,7 @@ const skillsSeed = {
     {
       name: 'Backend', color: '#34D399',
       stars: [
-        { id: 'node',    label: 'Node.js',    x: 18, y: 58, r: 1.1 },
+        { id: 'node',    label: 'Node.js',    x: 18, y: 58, r: 1.1, aliases: ['Express', 'Express 5'] },
         { id: 'express', label: 'Express.js', x: 29, y: 66, r: 0.9 },
         { id: 'django',  label: 'Django',     x: 11, y: 73, r: 0.8 },
         { id: 'php',     label: 'PHP',        x: 24, y: 79, r: 0.8 },
@@ -564,7 +564,7 @@ const skillsSeed = {
       name: 'Databases', color: '#FCD34D',
       stars: [
         { id: 'mongo',    label: 'MongoDB',  x: 47, y: 50, r: 1.0 },
-        { id: 'mysql',    label: 'MySQL',    x: 57, y: 58, r: 0.9 },
+        { id: 'mysql',    label: 'MySQL',    x: 57, y: 58, r: 0.9, aliases: ['SQL', 'PostgreSQL', 'SQLAlchemy'] },
         { id: 'pinecone', label: 'Pinecone', x: 43, y: 65, r: 0.8 },
       ],
       lines: [['mongo','mysql'],['mongo','pinecone'],['mysql','pinecone']],
@@ -572,11 +572,11 @@ const skillsSeed = {
     {
       name: 'AI & Cloud', color: '#F472B6',
       stars: [
-        { id: 'openai',  label: 'OpenAI',     x: 72, y: 52, r: 1.1 },
+        { id: 'openai',  label: 'OpenAI',     x: 72, y: 52, r: 1.1, aliases: ['OpenAI GPT-4o-mini', 'LLM Agent'] },
         { id: 'gemini',  label: 'Gemini',     x: 83, y: 60, r: 1.0 },
-        { id: 'gcp',     label: 'GCP',        x: 76, y: 70, r: 0.9 },
+        { id: 'gcp',     label: 'GCP',        x: 76, y: 70, r: 0.9, aliases: ['Google Cloud Platform'] },
         { id: 'k8s',     label: 'Kubernetes', x: 65, y: 76, r: 0.8 },
-        { id: 'vertex',  label: 'Vertex AI',  x: 91, y: 48, r: 0.8 },
+        { id: 'vertex',  label: 'Vertex AI',  x: 91, y: 48, r: 0.8, aliases: ['Google Vertex AI'] },
       ],
       lines: [['openai','gemini'],['gemini','gcp'],['gcp','k8s'],['openai','vertex'],['gemini','vertex']],
     },
@@ -586,7 +586,7 @@ const skillsSeed = {
         { id: 'github',  label: 'GitHub',     x: 35, y: 86, r: 0.9 },
         { id: 'postman', label: 'Postman',    x: 46, y: 92, r: 0.8 },
         { id: 'figma',   label: 'Figma',      x: 56, y: 87, r: 0.8 },
-        { id: 'ws',      label: 'WebSockets', x: 65, y: 93, r: 0.8 },
+        { id: 'ws',      label: 'WebSockets', x: 65, y: 93, r: 0.8, aliases: ['WebSocket'] },
       ],
       lines: [['github','postman'],['postman','figma'],['figma','ws']],
     },

@@ -11,6 +11,7 @@ const TECH_BADGES = [
 
 export default function Hero() {
   const { data: profile, loading } = useFetch('/api/profile');
+  const avail = profile?.availability;
 
   return (
     <section id="hero" className="hero-section">
@@ -21,7 +22,9 @@ export default function Hero() {
 
           <div className="hero-status-badge">
             <span className="hero-status-dot" />
-            Open to opportunities
+            {avail?.open === false
+              ? (avail.closedLabel || 'Not currently looking')
+              : (avail?.status || 'Open to opportunities')}
           </div>
 
           <p className="hero-greeting">{profile?.greeting || 'Hello, Universe'}</p>

@@ -6,6 +6,7 @@ import AboutEditor          from './editors/AboutEditor';
 import SkillsEditor         from './editors/SkillsEditor';
 import ExperienceEditor     from './editors/ExperienceEditor';
 import ProjectsEditor       from './editors/ProjectsEditor';
+import CertificationsEditor from './editors/CertificationsEditor';
 import HackathonsEditor     from './editors/HackathonsEditor';
 import RecommendationsEditor from './editors/RecommendationsEditor';
 import MessagesInbox         from './editors/MessagesInbox';
@@ -16,6 +17,7 @@ const NAV = [
   { key: 'experience',      label: '💼 Experience' },
   { key: 'projects',        label: '🚀 Projects' },
   { key: 'skills',          label: '⚡ Skills' },
+  { key: 'certifications',  label: '📜 Certifications' },
   { key: 'hackathons',      label: '🏆 Hackathons' },
   { key: 'recommendations', label: '📡 Recommendations' },
   { key: 'messages',        label: '📬 Messages' },
@@ -27,6 +29,7 @@ const EDITORS = {
   experience:      <ExperienceEditor />,
   projects:        <ProjectsEditor />,
   skills:          <SkillsEditor />,
+  certifications:  <CertificationsEditor />,
   hackathons:      <HackathonsEditor />,
   recommendations: <RecommendationsEditor />,
   messages:        <MessagesInbox />,

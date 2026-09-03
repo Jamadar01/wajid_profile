@@ -10,6 +10,7 @@ const experienceRoutes  = require('./src/routes/experience');
 const projectRoutes     = require('./src/routes/projects');
 const skillRoutes       = require('./src/routes/skills');
 const hackathonRoutes   = require('./src/routes/hackathons');
+const certificationRoutes = require('./src/routes/certifications');
 const recommendationRoutes = require('./src/routes/recommendations');
 const messageRoutes     = require('./src/routes/messages');
 
@@ -30,6 +31,7 @@ app.use('/api/experience',      experienceRoutes);
 app.use('/api/projects',        projectRoutes);
 app.use('/api/skills',          skillRoutes);
 app.use('/api/hackathons',      hackathonRoutes);
+app.use('/api/certifications',  certificationRoutes);
 app.use('/api/recommendations', recommendationRoutes);
 app.use('/api/messages',        messageRoutes);
 

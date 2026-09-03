@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import './App.css';
 
 import { AuthProvider }    from './context/AuthContext';
@@ -14,13 +14,34 @@ import Hero            from './pages/Hero';
 import About           from './pages/About';
 import Experience      from './pages/Experience';
 import Projects        from './pages/Projects';
-import PersonalProjects from './pages/PersonalProjects';
+import MissionDetail   from './pages/MissionDetail';
 import SkillMap        from './pages/SkillMap';
 import Hackathons      from './pages/Hackathons';
 import Contact         from './pages/Contact';
 import GitHubActivity  from './pages/GitHubActivity';
 import NotFound        from './pages/NotFound';
 //import Recommendations from './components/Recommendations';
+
+/* Coming back from /mission/:slug to /#experience changes the route, and the
+   router does not scroll to a hash on its own — so do it here. Waits a frame
+   for the target section to mount before scrolling. */
+function HashScroll() {
+  const { pathname, hash } = useLocation();
+
+  useEffect(() => {
+    if (!hash) {
+      if (pathname === '/') window.scrollTo(0, 0);
+      return;
+    }
+    const raf = requestAnimationFrame(() => {
+      const el = document.querySelector(hash);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+    return () => cancelAnimationFrame(raf);
+  }, [pathname, hash]);
+
+  return null;
+}
 
 function Portfolio() {
   /* 2-D mouse parallax — CSS custom properties, no re-renders */
@@ -56,7 +77,6 @@ function Portfolio() {
         <About />
         <Experience />
         <Projects />
-        <PersonalProjects />
         <SkillMap />
         <Hackathons />
         <GitHubActivity />
@@ -82,11 +102,13 @@ export default function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
+        <HashScroll />
         <Routes>
-          <Route path="/"             element={<Portfolio />} />
-          <Route path="/admin/login"  element={<AdminLogin />} />
-          <Route path="/admin"        element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
-          <Route path="*"             element={<NotFound />} />
+          <Route path="/"                 element={<Portfolio />} />
+          <Route path="/mission/:slug"    element={<MissionDetail />} />
+          <Route path="/admin/login"      element={<AdminLogin />} />
+          <Route path="/admin"            element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+          <Route path="*"                 element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

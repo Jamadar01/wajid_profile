@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import ArchitectureDiagram from './ArchitectureDiagram';
 
-/* Shared planet grid + detail panel, used by both the company Projects
-   section and the personal builds section. `variant` decides what sits
-   under the planet name: the company tag, or Live / Code links. */
+/* Shared planet grid + detail panel. `variant` decides what sits under the
+   planet name: the company tag, or Live / Code links. The homepage uses the
+   personal variant; the company variant is still here because mission pages
+   and any future company grid share this component. */
 
 function PlanetLinks({ project, color, onCard }) {
   const { liveUrl, repoUrl } = project;
@@ -128,6 +130,12 @@ export default function PlanetSystem({ projects, variant = 'company', label = 'P
             </div>
             <button className="planet-close" onClick={() => setSelected(null)}>✕</button>
           </div>
+          {selected.draft && (
+            <span className="mission-draft-badge" style={{ marginBottom: '1rem', display: 'inline-block' }}>
+              DRAFT
+            </span>
+          )}
+
           <p className="planet-detail-desc">{selected.desc}</p>
 
           {(selected.problem || selected.solution || selected.result) && (
@@ -152,6 +160,17 @@ export default function PlanetSystem({ projects, variant = 'company', label = 'P
               )}
             </div>
           )}
+
+          {!!(selected.highlights || []).length && (
+            <div className="mission-highlights">
+              <p className="case-label" style={{ color: selected.color }}>Highlights</p>
+              <ul className="exp-points">
+                {selected.highlights.map((h, i) => <li key={i}>{h}</li>)}
+              </ul>
+            </div>
+          )}
+
+          <ArchitectureDiagram layers={selected.architecture} color={selected.color} />
 
           <div className="planet-detail-tech">
             {(selected.tech || []).map(t => (

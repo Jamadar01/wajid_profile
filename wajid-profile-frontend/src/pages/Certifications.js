@@ -11,7 +11,7 @@ function verifyLabel(url = '') {
   return 'Verify credential';
 }
 
-/* Square card, badge-first. Three pills is what fits on one row of a 272px
+/* Portrait card, badge-first. Three pills is what fits on one row of a 288px
    tile, so show three when that is all there is, otherwise two plus a count —
    that keeps the "+N" inline instead of wrapping onto a lonely second row.
    The full skill list stays on the credential itself. */
@@ -58,6 +58,8 @@ function CertCard({ cert }) {
         {cert.expires && <> · Expires {cert.expires}</>}
         {cert.issued && !cert.expires && <> · No expiry</>}
       </p>
+
+      {cert.desc && <p className="cert-desc">{cert.desc}</p>}
 
       {!!shown.length && (
         <div className="cert-skills">

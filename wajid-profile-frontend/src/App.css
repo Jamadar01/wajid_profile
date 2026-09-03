@@ -2228,12 +2228,13 @@ body {
 }
 
 /* ─── CERTIFICATIONS ──────────────────────────────────────── */
-/* Fixed-width square tiles in a left-aligned grid — the badge-wall layout
+/* Fixed-width portrait tiles in a left-aligned grid — the badge-wall layout
    corporate credential pages use. Fixed columns rather than 1fr so a lone
-   card stays a card instead of stretching into a banner. */
+   card stays a card instead of stretching into a banner. Grid rows equalise
+   on their own, so every card in a row matches the tallest. */
 .cert-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, 272px);
+  grid-template-columns: repeat(auto-fill, 288px);
   justify-content: start;
   gap: 1.5rem;
 }
@@ -2245,7 +2246,7 @@ body {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  min-height: 272px;
+  min-height: 400px;
   background: var(--glass);
   border: 1px solid;
   border-radius: 16px;
@@ -2314,6 +2315,20 @@ body {
   font-size: 0.72rem;
   color: var(--text-dim);
   margin-bottom: 0.9rem;
+}
+
+.cert-desc {
+  position: relative;
+  font-size: 0.79rem;
+  line-height: 1.65;
+  color: var(--text-mid);
+  margin-bottom: 1rem;
+  /* generous clamp: fits a typical credential blurb whole, and stops one
+     unusually long description from making a very tall row */
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .cert-skills {

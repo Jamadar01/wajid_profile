@@ -3,8 +3,8 @@ import { ReactTyped } from 'react-typed';
 import { useFetch } from '../hooks/useFetch';
 
 const TECH_BADGES = [
-  { label: 'Node.js',   style: { top: '8%',   right: '-18%' }, delay: '0s' },
-  { label: 'React',     style: { top: '35%',  left: '-20%'  }, delay: '1.2s' },
+  { label: 'Python',   style: { top: '8%',   right: '-18%' }, delay: '0s' },
+  { label: 'Agentic AI',     style: { top: '35%',  left: '-20%'  }, delay: '1.2s' },
   { label: 'AI / LLM',  style: { bottom: '28%', right: '-16%' }, delay: '0.6s' },
   { label: 'MongoDB',   style: { bottom: '8%', left: '-14%'  }, delay: '1.8s' },
 ];

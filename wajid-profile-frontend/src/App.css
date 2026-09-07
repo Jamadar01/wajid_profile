@@ -1546,13 +1546,21 @@ body {
   padding: 1rem;
   overflow: hidden;
   box-shadow: var(--starmap-vignette);
+
+  /* Full section width — the height is what had to come down, not the width.
+     The sky itself is drawn wide (see SKY_H in SkillMap.js) so the stars
+     spread across the panel rather than sitting in a centred square. */
+  width: 100%;
 }
 
 .starmap-svg {
   width: 100%;
   height: auto;
   display: block;
-  aspect-ratio: 1 / 1;
+  /* Matches the 100 x SKY_H viewBox, so the sky scales uniformly and the star
+     circles stay round. At the section's 936px this is ~505px tall, which
+     fits a laptop viewport where the old 1:1 ratio did not. */
+  aspect-ratio: 100 / 54;
 }
 
 /* ─── SECTION STATUS (loading / error) ────────────────── */

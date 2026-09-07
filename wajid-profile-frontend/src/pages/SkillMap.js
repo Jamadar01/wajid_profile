@@ -1,10 +1,19 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { useFetch } from '../hooks/useFetch';
 import { useTheme } from '../context/ThemeContext';
 import SectionStatus from '../components/SectionStatus';
 
 const ALL = '__all__';
+
+/* The sky is drawn wide rather than square. Star coordinates arrive as 0-100
+   on both axes, so a 1:1 box made the map as tall as the section is wide —
+   936px tall on a laptop, with the bottom constellations permanently below the
+   fold. Compressing the y axis into SKY_H units keeps the full width and the
+   stars spread across it, instead of letterboxing a square into a wide panel. */
+const SKY_H  = 54;
+const ASPECT = 100 / SKY_H;
+const sy = (y) => (y * SKY_H) / 100;
 
 /* Where a project lives. Company work sits inside its mission page and is
    deep-linked to the project's own anchor; personal builds have no page of
@@ -73,18 +82,58 @@ export default function SkillMap() {
 
   const selected = selectedId ? starIndex[selectedId] : null;
 
-  /* a category filter dims the rest of the sky rather than removing it —
-     the shape of the whole map is part of what makes it readable */
-  const inFilter = useCallback(
-    (name) => category === ALL || category === name,
-    [category]
-  );
-
   const pickCategory = (name) => {
     setCategory(name);
     /* a selection from a now-hidden category would leave a stale panel open */
     if (selected && name !== ALL && selected.category !== name) setSelectedId(null);
   };
+
+  /* A category filter used to dim the rest of the sky. It now hides it: with
+     one constellation on screen there is room to zoom into it, which is what
+     makes the individual skills readable. */
+  const visible = category === ALL
+    ? CONSTELLATIONS
+    : CONSTELLATIONS.filter(c => c.name === category);
+
+  /* Fit the view to whatever is on screen, expanded to the panel's aspect
+     ratio so the constellation lands centred rather than letterboxed. */
+  const viewBox = useMemo(() => {
+    const stars = visible.flatMap(c => c.stars);
+    if (category === ALL || !stars.length) return `0 0 100 ${SKY_H}`;
+
+    const pad = 10;
+    let minX = Math.min(...stars.map(s => s.x)) - pad;
+    let maxX = Math.max(...stars.map(s => s.x)) + pad;
+    let minY = Math.min(...stars.map(s => sy(s.y))) - pad / ASPECT;
+    let maxY = Math.max(...stars.map(s => sy(s.y))) + pad / ASPECT;
+
+    let w = maxX - minX;
+    let h = maxY - minY;
+
+    /* Floor the zoom. A four-star constellation spans ~20 units, and scaling
+       that to the full panel blew the stars up to three times their normal
+       size — the sky stopped reading as a sky. */
+    const MIN_W = 62;
+    if (w < MIN_W) {
+      const cx = minX + w / 2;
+      w = MIN_W;
+      minX = cx - w / 2;
+      const cy = minY + h / 2;
+      h = w / ASPECT;
+      minY = cy - h / 2;
+    }
+
+    if (w / h < ASPECT) {
+      const grown = h * ASPECT;
+      minX -= (grown - w) / 2;
+      w = grown;
+    } else {
+      const grown = w / ASPECT;
+      minY -= (grown - h) / 2;
+      h = grown;
+    }
+    return `${minX} ${minY} ${w} ${h}`;
+  }, [visible, category]);
 
   const totalSkills = CONSTELLATIONS.reduce((n, c) => n + c.stars.length, 0);
   const shownSkills = category === ALL
@@ -144,7 +193,7 @@ export default function SkillMap() {
 
       <div className="starmap-wrap">
         <svg
-          viewBox="0 0 100 100"
+          viewBox={viewBox}
           className="starmap-svg"
           preserveAspectRatio="xMidYMid meet"
         >
@@ -161,35 +210,32 @@ export default function SkillMap() {
             <circle
               key={i}
               cx={(Math.sin(i * 137.5) * 0.5 + 0.5) * 100}
-              cy={(Math.cos(i * 97.3) * 0.5 + 0.5) * 100}
+              cy={(Math.cos(i * 97.3) * 0.5 + 0.5) * SKY_H}
               r={0.2}
               className="starmap-dot"
               opacity={0.15 + (i % 5) * 0.05}
             />
           ))}
 
-          {CONSTELLATIONS.map(c =>
+          {visible.map(c =>
             c.lines.map(([a, b]) => {
               const sa = starIndex[a], sb = starIndex[b];
               if (!sa || !sb) return null;
-              const lit = inFilter(c.name);
               return (
                 <line
                   key={`${a}-${b}`}
-                  x1={sa.x} y1={sa.y} x2={sb.x} y2={sb.y}
+                  x1={sa.x} y1={sy(sa.y)} x2={sb.x} y2={sy(sb.y)}
                   stroke={c.color}
                   strokeWidth={0.25}
-                  strokeOpacity={lit ? 0.45 : 0.06}
+                  strokeOpacity={0.45}
                   strokeDasharray="0.6 0.8"
-                  style={{ transition: 'stroke-opacity 0.4s' }}
                 />
               );
             })
           )}
 
-          {CONSTELLATIONS.map(c =>
+          {visible.map(c =>
             c.stars.map(s => {
-              const lit        = inFilter(c.name);
               const isHovered  = hovered === s.id;
               const isSelected = selectedId === s.id;
               const emphasised = isHovered || isSelected;
@@ -200,32 +246,32 @@ export default function SkillMap() {
                   {/* selection ring, so the open panel has a visible source */}
                   {isSelected && (
                     <circle
-                      cx={s.x} cy={s.y} r={s.r * 4.2}
+                      cx={s.x} cy={sy(s.y)} r={s.r * 4.2}
                       fill="none" stroke={c.color} strokeWidth={0.35} strokeOpacity={0.7}
                     />
                   )}
                   <circle
-                    cx={s.x} cy={s.y}
+                    cx={s.x} cy={sy(s.y)}
                     r={emphasised ? s.r * 3.5 : s.r * 2}
                     fill={c.color}
                     opacity={emphasised ? 0.2 : 0.06}
                     style={{ transition: 'all 0.25s' }}
                   />
                   <circle
-                    cx={s.x} cy={s.y}
+                    cx={s.x} cy={sy(s.y)}
                     r={emphasised ? s.r * 1.6 : s.r}
                     fill={c.color}
-                    opacity={lit ? (emphasised ? 1 : 0.85) : 0.15}
+                    opacity={emphasised ? 1 : 0.85}
                     filter={`url(#glow-${c.name.replace(/\s/g,'')})`}
-                    style={{ cursor: lit ? 'pointer' : 'default', transition: 'all 0.25s' }}
-                    onMouseEnter={() => lit && setHovered(s.id)}
+                    style={{ cursor: 'pointer', transition: 'all 0.25s' }}
+                    onMouseEnter={() => setHovered(s.id)}
                     onMouseLeave={() => setHovered(null)}
-                    onClick={() => lit && setSelectedId(id => (id === s.id ? null : s.id))}
+                    onClick={() => setSelectedId(id => (id === s.id ? null : s.id))}
                   />
                   {(isHovered || isSelected) && (
                     <text
                       x={s.x + (s.x > 50 ? -1.5 : 1.5)}
-                      y={s.y - s.r - 1.2}
+                      y={sy(s.y) - s.r - 1.2}
                       fontSize="2.8"
                       fill={c.color}
                       textAnchor={s.x > 50 ? 'end' : 'start'}

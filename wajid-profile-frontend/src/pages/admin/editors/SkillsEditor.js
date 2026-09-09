@@ -48,7 +48,7 @@ export default function SkillsEditor() {
 
   const save = async () => {
     try {
-      await api.put('/api/skills', {
+      const saved = await api.put('/api/skills', {
         groups: groups.map(g => ({
           label:  g.label.trim(),
           skills: g.skills.split(',').map(s => s.trim()).filter(Boolean),
@@ -65,9 +65,29 @@ export default function SkillsEditor() {
           })),
         })),
       }, token);
-      setStatus('Saved!');
+
+      /* The server re-derives the star map from the groups on every save, so
+         say what that produced — otherwise adding a skill looks like it did
+         nothing until you scroll down to the map. */
+      const r = saved?.sync;
+      const changes = r ? [
+        r.groupsAdded?.length   && `${r.groupsAdded.length} new constellation${r.groupsAdded.length > 1 ? 's' : ''}`,
+        r.added?.length         && `${r.added.length} star${r.added.length > 1 ? 's' : ''} added`,
+        r.removed?.length       && `${r.removed.length} removed`,
+      ].filter(Boolean) : [];
+
+      setStatus(changes.length ? `Saved · ${changes.join(', ')}` : 'Saved!');
+
+      /* Reload the map so the new stars are on screen and their aliases can be
+         edited straight away. */
+      api.get('/api/skills/tree').then(d => setCons(
+        (d.constellations || []).map(c => ({
+          ...c,
+          stars: (c.stars || []).map(st => ({ ...st, aliasText: (st.aliases || []).join(', ') })),
+        }))
+      )).catch(() => {});
     } catch (e) { setStatus('Error: ' + e.message); }
-    setTimeout(() => setStatus(''), 3000);
+    setTimeout(() => setStatus(''), 5000);
   };
 
   const unmatched = cons.flatMap(c => c.stars).filter(s => !s.projectCount).length;

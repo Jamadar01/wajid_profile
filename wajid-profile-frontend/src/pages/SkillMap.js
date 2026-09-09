@@ -11,7 +11,7 @@ const ALL = '__all__';
    936px tall on a laptop, with the bottom constellations permanently below the
    fold. Compressing the y axis into SKY_H units keeps the full width and the
    stars spread across it, instead of letterboxing a square into a wide panel. */
-const SKY_H  = 54;
+const SKY_H  = 60;
 const ASPECT = 100 / SKY_H;
 const sy = (y) => (y * SKY_H) / 100;
 
@@ -239,7 +239,6 @@ export default function SkillMap() {
               const isHovered  = hovered === s.id;
               const isSelected = selectedId === s.id;
               const emphasised = isHovered || isSelected;
-              const hasProjects = (s.projectCount || 0) > 0;
 
               return (
                 <g key={s.id}>
@@ -248,6 +247,7 @@ export default function SkillMap() {
                     <circle
                       cx={s.x} cy={sy(s.y)} r={s.r * 4.2}
                       fill="none" stroke={c.color} strokeWidth={0.35} strokeOpacity={0.7}
+                      style={{ pointerEvents: 'none' }}
                     />
                   )}
                   <circle
@@ -255,7 +255,9 @@ export default function SkillMap() {
                     r={emphasised ? s.r * 3.5 : s.r * 2}
                     fill={c.color}
                     opacity={emphasised ? 0.2 : 0.06}
-                    style={{ transition: 'all 0.25s' }}
+                    /* Decoration only. Hit-testable, this halo covers the
+                       neighbouring star and its hover never fires. */
+                    style={{ transition: 'all 0.25s', pointerEvents: 'none' }}
                   />
                   <circle
                     cx={s.x} cy={sy(s.y)}
@@ -279,7 +281,7 @@ export default function SkillMap() {
                       fontWeight="600"
                       style={{ pointerEvents: 'none' }}
                     >
-                      {s.label}{hasProjects ? ` · ${s.projectCount}` : ''}
+                      {s.label}
                     </text>
                   )}
                 </g>

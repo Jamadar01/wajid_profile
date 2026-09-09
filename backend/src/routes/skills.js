@@ -4,6 +4,7 @@ const Project    = require('../models/Project');
 const Experience = require('../models/Experience');
 const authGuard  = require('../middleware/auth');
 const { matches } = require('../utils/techMatch');
+const { syncConstellations } = require('../utils/skillSync');
 
 const router = express.Router();
 
@@ -82,14 +83,34 @@ router.get('/tree', async (_req, res) => {
   }
 });
 
+/* Saving the skills doc re-derives the star map from the groups.
+ *
+ * The two lists used to be written independently, so adding a skill in the
+ * editor left the constellation without a star for it — and a whole new group
+ * never appeared on the map at all. The constellations the editor submits are
+ * treated as the *previous* state rather than the new value: alias edits made
+ * on that screen survive, while the star list is brought back in line with the
+ * groups. `sync` comes back in the response so the editor can say what moved. */
 router.put('/', authGuard, async (req, res) => {
   try {
+    const current = await Skill.findById('singleton').lean();
+
+    /* A partial update must not wipe the half it did not send. */
+    const groups = Array.isArray(req.body.groups)
+      ? req.body.groups
+      : (current?.groups || []);
+    const priorCons = Array.isArray(req.body.constellations)
+      ? req.body.constellations
+      : (current?.constellations || []);
+
+    const { constellations, report } = syncConstellations(groups, priorCons);
+
     const doc = await Skill.findByIdAndUpdate(
       'singleton',
-      { ...req.body, _id: 'singleton' },
+      { _id: 'singleton', groups, constellations },
       { new: true, upsert: true, runValidators: true }
     );
-    res.json(doc);
+    res.json({ ...doc.toObject(), sync: report });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }

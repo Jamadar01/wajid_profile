@@ -28,6 +28,16 @@ const SKY = 100;
 const MARGIN = 6;      // keep stars off the panel edge
 const CELL_PAD = 3;    // gap between neighbouring constellations
 
+/* The map draws y compressed into a wide panel — SKY_H / 100 in SkillMap.js.
+   Spacing has to be judged in that same space or stars that look comfortably
+   apart here end up touching on screen, which is what made some of them
+   impossible to hover: a neighbour's glow sat over their hit area. */
+const Y_DISPLAY = 0.60;
+
+/* Minimum gap between any two stars, in on-screen units. At the section's
+   936px width one unit is ~9px, so this keeps ~40px between centres. */
+const MIN_SEP = 4.4;
+
 /* Hue in degrees, for telling palette entries apart. Exact-match dedupe is not
    enough: #FCD34D and #FBBF24 are different strings and the same amber to the
    eye, and colour is the only thing marking one constellation from another. */
@@ -91,24 +101,75 @@ function cellFor(index, total) {
   };
 }
 
-/* Stars ringed around the cell centre, jittered so the result reads as a
-   constellation rather than a clock face. */
+const clampSky = (v) => Math.max(MARGIN, Math.min(SKY - MARGIN, v));
+
+/* Stars spread over the cell by golden angle, which distributes them evenly by
+   area. A single ring was fine for four or five stars and crowded badly at
+   eleven, where the whole constellation ended up on one small circle. */
+const GOLDEN_ANGLE = Math.PI * (3 - Math.sqrt(5));
+
 function ringPosition(cell, i, count, seed) {
   const cx = cell.x + cell.w / 2;
   const cy = cell.y + cell.h / 2;
-  const clamp = (v) => Math.max(MARGIN, Math.min(SKY - MARGIN, v));
 
   if (count === 1) return { x: +cx.toFixed(1), y: +cy.toFixed(1) };
 
-  const angle = (i / count) * Math.PI * 2 + hashUnit(seed) * 0.9;
-  /* Two radii alternating gives the outline depth; one radius puts every star
-     on a single circle. */
-  const spread = 0.34 + (i % 2) * 0.13 + hashUnit(seed + 'r') * 0.10;
+  /* sqrt keeps the density even instead of piling stars up in the middle. */
+  const radius = Math.sqrt((i + 0.6) / count);
+  const angle = i * GOLDEN_ANGLE + hashUnit(seed) * 0.7;
+  const jitter = 0.94 + hashUnit(seed + 'j') * 0.12;
 
   return {
-    x: +clamp(cx + Math.cos(angle) * cell.w * spread).toFixed(1),
-    y: +clamp(cy + Math.sin(angle) * cell.h * spread).toFixed(1),
+    x: +clampSky(cx + Math.cos(angle) * radius * cell.w * 0.46 * jitter).toFixed(1),
+    y: +clampSky(cy + Math.sin(angle) * radius * cell.h * 0.46 * jitter).toFixed(1),
   };
+}
+
+/* Push apart any two stars closer than MIN_SEP on screen.
+ *
+ * Placement alone cannot guarantee separation: constellations sit in their own
+ * cells but stars near a shared edge still collide, and coordinates kept from
+ * a previous layout know nothing about the stars around them now. A few
+ * relaxation passes fix both without moving anything that is already clear. */
+function separate(stars, iterations = 80) {
+  for (let pass = 0; pass < iterations; pass++) {
+    let moved = false;
+
+    for (let i = 0; i < stars.length; i++) {
+      for (let j = i + 1; j < stars.length; j++) {
+        const a = stars[i];
+        const b = stars[j];
+        let dx = b.x - a.x;
+        let dy = (b.y - a.y) * Y_DISPLAY;
+        let dist = Math.hypot(dx, dy);
+
+        if (dist >= MIN_SEP) continue;
+
+        /* Exactly coincident (the same skill in two groups inheriting one
+           position): nudge along a fixed axis so the result stays stable. */
+        if (dist < 1e-3) {
+          dx = 1; dy = 0; dist = 1;
+        }
+
+        const push = (MIN_SEP - dist) / 2;
+        const ux = (dx / dist) * push;
+        const uy = (dy / dist) * push;
+
+        a.x = clampSky(a.x - ux);
+        b.x = clampSky(b.x + ux);
+        a.y = clampSky(a.y - uy / Y_DISPLAY);
+        b.y = clampSky(b.y + uy / Y_DISPLAY);
+        moved = true;
+      }
+    }
+
+    if (!moved) break;
+  }
+
+  stars.forEach(s => {
+    s.x = +s.x.toFixed(1);
+    s.y = +s.y.toFixed(1);
+  });
 }
 
 /* Chain the stars in ring order and close the loop. Three or more get a closed
@@ -244,6 +305,11 @@ function syncConstellations(groups, existing, opts) {
       lines: (sameStars && (prior.lines || []).length) ? prior.lines : linesFor(stars),
     };
   });
+
+  /* Separation runs across every constellation at once: stars only ever
+     collided near a shared cell edge, so a per-constellation pass would miss
+     exactly the overlaps that matter. */
+  separate(constellations.flatMap(c => c.stars));
 
   const groupNames = new Set(constellations.map(c => c.name));
   prev.forEach(c => {

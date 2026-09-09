@@ -1558,9 +1558,10 @@ body {
   height: auto;
   display: block;
   /* Matches the 100 x SKY_H viewBox, so the sky scales uniformly and the star
-     circles stay round. At the section's 936px this is ~505px tall, which
-     fits a laptop viewport where the old 1:1 ratio did not. */
-  aspect-ratio: 100 / 54;
+     circles stay round. At the section's 936px this is ~562px tall — taller
+     than the first pass, to give stars vertical room to separate, and still
+     well inside a laptop viewport where the old 1:1 ratio was not. */
+  aspect-ratio: 100 / 60;
 }
 
 /* ─── SECTION STATUS (loading / error) ────────────────── */
